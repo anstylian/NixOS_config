@@ -86,13 +86,14 @@
     description = "angelos";
     extraGroups = [ "wheel" ];    
   };
-
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {
     variables.EDITOR = "nvim";
+    variables.TERMINAL = "alacritty";
     systemPackages = with pkgs; [
-      wget vim htop git neovim
+      wget vim htop git neovim alacritty
     ];
   };
   
