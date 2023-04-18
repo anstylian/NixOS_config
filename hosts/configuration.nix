@@ -80,6 +80,10 @@
     ];
   };
 
+  programs.tmux = {
+    enable = true;
+  };
+
   services = {
     avahi = {                                   # Needed to find wireless printer
       enable = true;
