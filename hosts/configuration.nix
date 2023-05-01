@@ -41,12 +41,6 @@
 
   security.rtkit.enable = true;
   security.polkit.enable = true;
-  #sound = {                                # Deprecated due to pipewire
-  #  enable = true;
-  #  mediaKeys = {
-  #    enable = true;
-  #  };
-  #};
 
   fonts.fonts = with pkgs; [                # Fonts
     carlito                                 # NixOS
@@ -77,6 +71,7 @@
       usbutils
       wget
       tree
+      alacritty
     ];
   };
 

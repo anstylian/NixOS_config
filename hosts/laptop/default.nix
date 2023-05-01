@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, user, inputs,  ... }:
+{ config, lib, pkgs, user, inputs, ... }:
 
 {
   imports =
@@ -27,12 +27,6 @@
       };
       timeout = 5;
     };
-    kernelParams = [
-      "i915.enable_dpcd_backlight=1"
-      # fix flicker
-      # source https://wiki.archlinux.org/index.php/Intel_graphics#Screen_flickering
-      "i915.enable_psr=0"
-    ];
   };
 
   programs.dconf.enable = true;
@@ -61,35 +55,21 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-
-    desktopManager = {
-      xterm.enable = false;
-    };
-
+    # Configure keymap in X11
+    layout = "us";
     displayManager = {
-      defaultSession = "none+i3";
-      setupCommands = ''
-#      UP='DP-1'
-#      CENTER='eDP-1'
-#      ${pkgs.xorg.xrandr}/bin/xrandr --output $CENTER --rotate normal --output $UP --rotate normal --above $CENTER 
-'';
+      sddm = {
+        enable = true;
+      };
     };
-  
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-        i3status
-        i3lock
-        i3blocks
-      ];
+    desktopManager = {
+      plasma5 = {
+        enable = true;
+      };
     };
   };
 
-  
 
-  # Configure keymap in X11
-  services.xserver.layout = "us";
 #  services.xserver.xkbOptions = {
 #    "eurosign:e";
 #    "caps:escape" # map caps to escape.

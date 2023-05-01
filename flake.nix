@@ -32,9 +32,13 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      nixos-hardware = {
+        url = "github:anstylian/nixos-hardware/master";
+      };
+
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixgl, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, nixgl, hyprland, nixos-hardware, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "angelos";
       location = "$HOME/.setup";
@@ -43,7 +47,7 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user location hyprland;       # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager user location hyprland nixos-hardware;       # Also inherit home-manager so it does not need to be defined here.
         }
       );
     };

@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, user, location, hyprland, ... }:
+{ lib, inputs, nixpkgs, home-manager, user, location, hyprland, nixos-hardware, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -37,7 +37,7 @@ in
       hyprland.nixosModules.default
       ./laptop
       ./configuration.nix
-
+      nixos-hardware.nixosModules.dell-precision-3541
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
@@ -54,5 +54,4 @@ in
       }
     ];
   };
-
 }

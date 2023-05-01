@@ -53,6 +53,8 @@
 #      unrar             # Rar Files
       zip               # Zip
 
+      lm_sensors
+
       # General configuration
       #git              # Repositories
       #killall          # Stop Applications
@@ -65,7 +67,8 @@
       #zsh              # Shell
       #
       # General home-manager
-      alacritty        # Terminal Emulator
+      alacritty         # Terminal Emulator
+      vscode            # VS code
       #dunst            # Notifications
       #doom emacs       # Text Editor
       #libnotify        # Dependency for Dunst
