@@ -14,9 +14,9 @@
 { config, lib, pkgs, user, ... }:
 
 { 
-#  imports =                                   # Home Manager Modules
-#    (import ../modules/programs) ++
-#    (import ../modules/services);
+  imports =                                   # Home Manager Modules
+    (import ../modules/programs) ++
+    (import ../modules/services);
 
   home = {
     username = "${user}";
@@ -54,6 +54,8 @@
       zip               # Zip
 
       lm_sensors
+      ripgrep
+      bat
 
       # General configuration
       #git              # Repositories

@@ -80,19 +80,5 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
-
-  programs.zsh = {
-    enable = true;
-    shellAliases = {
-      ll = "ls -l";
-      llt = "ls -l -t";
-    };
-    ohMyZsh = {
-      enable = true;
-      plugins = [ "git" "man" ];
-      theme = "robbyrussell";
-    };
-  };
-
 }
 

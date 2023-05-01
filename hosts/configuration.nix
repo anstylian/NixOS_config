@@ -14,9 +14,9 @@
 { config, lib, pkgs, inputs, user, ... }:
 
 {
-#  imports =
+  imports = 
+    (import ../modules/shell);
 #    (import ../modules/editors) ++          # Native doom emacs instead of nix-community flake
-#    (import ../modules/shell);
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
@@ -65,7 +65,6 @@
     systemPackages = with pkgs; [           # Default packages installed system-wide
       vim
       neovim
-      git
       killall
       pciutils
       usbutils
@@ -73,10 +72,6 @@
       tree
       alacritty
     ];
-  };
-
-  programs.tmux = {
-    enable = true;
   };
 
   services = {
