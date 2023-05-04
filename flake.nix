@@ -33,7 +33,7 @@
       };
 
       nixos-hardware = {
-        url = "github:anstylian/nixos-hardware/master";
+	url = "github:NixOS/nixos-hardware/master";
       };
 
     };
