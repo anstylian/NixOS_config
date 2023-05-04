@@ -16,11 +16,13 @@
 {
   imports =
     [
-#      ../../modules/desktop/bspwm/home.nix # Window Manager
+      ../../modules/hyprland/home.nix # Window Manager
     ];
 
   home = {                                # Specific packages for laptop
     packages = with pkgs; [
+      mpvpaper
+      mpv
       # Applications
       libreoffice                         # Office packages
 

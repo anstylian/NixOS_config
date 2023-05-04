@@ -8,6 +8,9 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/display-manager
+      ../../modules/desktop-environment
+      ../../modules/hyprland
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -53,21 +56,21 @@
 
 
   # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    # Configure keymap in X11
-    layout = "us";
-    displayManager = {
-      sddm = {
-        enable = true;
-      };
-    };
-    desktopManager = {
-      plasma5 = {
-        enable = true;
-      };
-    };
-  };
+#  services.xserver = {
+#    enable = true;
+#    # Configure keymap in X11
+#    layout = "us";
+#    displayManager = {
+#      sddm = {
+#        enable = true;
+#      };
+#    };
+#    desktopManager = {
+#      plasma5 = {
+#        enable = true;
+#      };
+#    };
+#  };
 
 
 #  services.xserver.xkbOptions = {
