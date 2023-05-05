@@ -122,10 +122,7 @@
             else [];
 
           modules-right =
-            if hostName == "desktop" then
-              [ "custom/ds4" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
-            else
-              [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
+              [ "cpu" "memory" "custom/pad" "network" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
 
           "custom/pad" = {
             format = "      ";

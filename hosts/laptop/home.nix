@@ -17,6 +17,7 @@
   imports =
     [
       ../../modules/hyprland/home.nix # Window Manager
+#      ../../modules/programs/neovim/home.nix
     ];
 
   home = {                                # Specific packages for laptop
@@ -42,7 +43,7 @@
   };
 
   services = {                            # Applets
-#    blueman-applet.enable = true;         # Bluetooth
+    blueman-applet.enable = true;         # Bluetooth
     network-manager-applet.enable = true; # Network
 #   cbatticon = {
 #     enable = true;

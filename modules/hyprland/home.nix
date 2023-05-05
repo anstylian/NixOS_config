@@ -61,7 +61,7 @@ let
     #if hostName == "desktop" then ''
       ''
       exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4  # Moving wallpaper (small performance hit)
-      exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
+      #exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
       '';
     #'' else if hostName == "work" then ''
     #  exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
@@ -210,7 +210,7 @@ in
   xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 
   programs.swaylock.settings = {
-    #image = "$HOME/.config/wall";
+    image = "$HOME/.config/wall";
     color = "000000f0";
     font-size = "24";
     indicator-idle-visible = false;

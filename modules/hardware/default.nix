@@ -1,16 +1,15 @@
 #
-#  Apps
+#  Hardware
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ home.nix
+#   │   └─ ./<host>
+#   │       └─ default.nix
 #   └─ ./modules
-#       └─ ./apps
+#       └─ ./hardware
 #           └─ default.nix *
 #               └─ ...
 #
-
 [
-  ./alacritty.nix
-  ./wofi.nix
+  ./bluetooth.nix
 ]

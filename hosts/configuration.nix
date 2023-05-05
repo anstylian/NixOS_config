@@ -36,7 +36,8 @@
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "us";                          # or us/azerty/etc
+#    keyMap = "us";
+    useXkbConfig = true; # use xkbOptions in tty.
   };
 
   security.rtkit.enable = true;
