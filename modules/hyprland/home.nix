@@ -60,8 +60,8 @@ let
   execute = with host;
     #if hostName == "desktop" then ''
       ''
-      exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4  # Moving wallpaper (small performance hit)
-      #exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
+      #exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4  # Moving wallpaper (small performance hit)
+      exec-once=${pkgs.swaybg}/bin/swaybg -m fill -i $HOME/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png
       '';
     #'' else if hostName == "work" then ''
     #  exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
