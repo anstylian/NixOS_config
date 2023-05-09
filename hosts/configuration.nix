@@ -66,8 +66,8 @@
   environment = {
     variables = {
       TERMINAL = "alacritty";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      EDITOR = "vim";
+      VISUAL = "vim";
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
       vim
