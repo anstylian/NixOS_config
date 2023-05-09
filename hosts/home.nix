@@ -42,6 +42,7 @@
       firefox           # Browser
 #      google-chrome     # Browser
       remmina           # XRDP & VNC Client
+      docker-compose
 
       # File Management
       gnome.file-roller # Archive Manager

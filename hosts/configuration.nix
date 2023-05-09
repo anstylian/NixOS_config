@@ -25,6 +25,12 @@
   };
   security.sudo.wheelNeedsPassword = true; # User does need to give password when using sudo.
 
+  virtualisation = {
+    docker.enable = true;
+  };
+
+  users.groups.docker.members = [ "${user}" ];
+
   time.timeZone = "Europe/Athens";         # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
