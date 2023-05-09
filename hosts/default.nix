@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, user, location, hyprland, nixos-hardware, ... }:
+{ lib, inputs, nixpkgs, home-manager, user, location, hyprland, nixos-hardware, astro-nvim, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -35,14 +35,16 @@ in
     };
     modules = [
       hyprland.nixosModules.default
-      ./laptop
       ./configuration.nix
+      ./laptop
       nixos-hardware.nixosModules.dell-precision-3541
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit user;
+	  inherit astro-nvim;
+	  inherit inputs;
           host = {
             hostName = "laptop";
             mainMonitor = "eDP-1";

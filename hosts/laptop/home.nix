@@ -17,7 +17,7 @@
   imports =
     [
       ../../modules/hyprland/home.nix # Window Manager
-#      ../../modules/programs/neovim/home.nix
+      ../../modules/programs/neovim
     ];
 
   home = {                                # Specific packages for laptop
