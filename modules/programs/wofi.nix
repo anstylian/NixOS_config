@@ -18,11 +18,8 @@ in
   home.file = {
     ".config/wofi/config" = {
       text = ''
-        width=280
+        width=560
         lines=10
-        xoffset=5
-        yoffset=5
-        location=1
         prompt=Search...
         filter_rate=100
         allow_markup=false
