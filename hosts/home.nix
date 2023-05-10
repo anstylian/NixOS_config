@@ -142,6 +142,7 @@
     ];
     file.".config/wall".source = ../modules/themes/wall;
     file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
+    file.".config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png".source = ../modules/themes/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png;
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
       gtk.enable = true;
       name = "Dracula-cursors";
@@ -155,6 +156,13 @@
 
   programs = {
     home-manager.enable = true;
+
+    direnv = {
+      enable = true;
+      nix-direnv = {
+        enable = true;
+      };
+    };
   };
 
   systemd.user.targets.tray = {               # Tray.target can not be found when xsession is not enabled. This fixes the issue.
