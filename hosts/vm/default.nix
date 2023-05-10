@@ -31,4 +31,9 @@
     kernelPackages = pkgs.linuxPackages_6_1;
   };
 
+#  networking.hostName = "nixos"; # Define your hostname.
+  networking.useDHCP = false;
+  networking.interfaces.eth0.useDHCP = true;
+  networking.firewall.enable = true;
+#  boot.loader.grub.device = "/dev/sda";
 }

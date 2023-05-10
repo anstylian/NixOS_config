@@ -1,14 +1,14 @@
 #
-#  Home-manager configuration for desktop
+#  Home-manager configuration for laptop
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ ./vm
+#   │   └─ ./laptop
 #   │       └─ home.nix *
 #   └─ ./modules
 #       └─ ./desktop
 #           └─ ./bspwm
-#               └─ home.nix
+#              └─ home.nix
 #
 
 { pkgs, ... }:
@@ -16,12 +16,39 @@
 {
   imports =
     [
-      ../../modules/desktop/bspwm/home.nix  #Window Manager
+      ../../modules/programs/neovim
     ];
 
-  home = {                                  # Specific packages for desktop
+  home = {                                # Specific packages for laptop
     packages = with pkgs; [
-      firefox
+      mpvpaper
+      mpv
+      # Applications
+      libreoffice                         # Office packages
+
+      # Display
+      #light                              # xorg.xbacklight not supported. Other option is just use xrandr.
+
+      # Power Management
+      #auto-cpufreq                       # Power management
+      #tlp                                # Power management
+
+      alsa-utils                          # Audio control
     ];
   };
+
+  programs = {
+    alacritty.settings.font.size = 11;
+  };
+
+#  services = {                            # Applets
+#    blueman-applet.enable = true;         # Bluetooth
+#    network-manager-applet.enable = true; # Network
+#   cbatticon = {
+#     enable = true;
+#     criticalLevelPercent = 10;
+#     lowLevelPercent = 20;
+#     iconType = null;
+#   };
+#  };
 }
