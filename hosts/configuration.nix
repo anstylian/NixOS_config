@@ -78,6 +78,7 @@
       wget
       tree
       alacritty
+      binutils
     ];
   };
 
