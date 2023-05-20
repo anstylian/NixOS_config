@@ -140,8 +140,6 @@
       # Flatpak
       #obs-studio       # Recording/Live Streaming
     ];
-    file.".config/wall".source = ../modules/themes/wall;
-    file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
     file.".config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png".source = ../modules/themes/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png;
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
       gtk.enable = true;
