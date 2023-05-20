@@ -48,6 +48,7 @@ in
           host = {
             hostName = "laptop";
             mainMonitor = "eDP-1";
+            secondMonitor = "DP-1";   #DP1            | DisplayPort-1
           };
         };
         home-manager.users.${user} = {
