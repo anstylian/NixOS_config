@@ -35,8 +35,8 @@ in
     };
     modules = [
       hyprland.nixosModules.default
-      ./laptop
       ./configuration.nix
+      ./laptop
       nixos-hardware.nixosModules.dell-precision-3541
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
@@ -65,8 +65,8 @@ in
       };
     };
     modules = [
-      ./vm
       ./configuration.nix
+      ./vm
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
@@ -75,7 +75,7 @@ in
 	  inherit astro-nvim;
 	  inherit inputs;
           host = {
-            hostName = "nixos-vm";
+            hostName = "vm";
           };
         };
         home-manager.users.${user} = {
