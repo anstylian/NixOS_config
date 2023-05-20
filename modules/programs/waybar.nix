@@ -7,6 +7,7 @@
 {
   environment.systemPackages = with pkgs; [
     waybar
+    networkmanagerapplet
   ];
 
   nixpkgs.overlays = [                                      # Waybar needs to be compiled with the experimental flag for wlr/workspaces to work (for now done with hyprland.nix)
@@ -29,198 +30,296 @@
 
       style = ''
         * {
-          border: none;
-          font-family: FiraCode Nerd Font Mono;
-          /*font-weight: bold;*/
-          font-size: 12px;
-          text-shadow: 0px 0px 5px #000000;
+            border: none;
+            border-radius: 0;
+            /* `otf-font-awesome` is required to be installed for icons */
+            font-family: Liberation Mono;
+            min-height: 0px;
         }
-        button:hover {
-          background-color: rgba(80,100,100,0.4);
-        }
+
         window#waybar {
-          background-color: rgba(0,0,0,0.5);
-          background: transparent;
-          transition-property: background-color;
-          transition-duration: .5s;
-          border-bottom: none;
+            background: transparent;
         }
+
         window#waybar.hidden {
-          opacity: 0.2;
+            opacity: 0.2;
         }
-        #workspace,
-        #mode,
-        #clock,
-        #pulseaudio,
-        #custom-sink,
-        #network,
-        #mpd,
-        #memory,
-        #network,
-        #window,
-        #cpu,
-        #disk,
-        #backlight,
-        #battery,
-        #custom-ds4,
-        #tray {
-          color: #999999;
-          background-clip: padding-box;
+
+        #workspaces {
+            margin-right: 8px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            background: #383c4a;
         }
-        #custom-menu {
-          color: #A7C7E7;
-          padding: 0px 5px 0px 5px;
-        }
+
         #workspaces button {
-          padding: 0px 5px;
-          min-width: 5px;
-          color: rgba(255,255,255,0.8);
+            transition: none;
+            color: #7c818c;
+            background: transparent;
+            padding: 5px;
+            font-size: 18px;
         }
+
+        #workspaces button.persistent {
+            color: #7c818c;
+            font-size: 12px;
+        }
+
+        /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
         #workspaces button:hover {
-          background-color: rgba(0,0,0,0.2);
+            transition: none;
+            box-shadow: inherit;
+            text-shadow: inherit;
+            border-radius: inherit;
+            color: #383c4a;
+            background: #7c818c;
         }
-        /*#workspaces button.focused {*/
-        #workspaces button.active {
-          color: rgba(255,255,255,0.8);
-          background-color: rgba(80,100,100,0.4);
+
+        #workspaces button.focused {
+            color: white;
         }
-        #workspaces button.visible {
-          color: #ccffff;
+
+        #custom-menu {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            color: #A7C7E7;
+            background: #383c4a;
         }
-        #workspaces button.hidden {
-          color: #999999;
+
+        #language {
+            padding-left: 16px;
+            padding-right: 8px;
+            border-radius: 0px 0px 0px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
         }
-        #battery.warning {
-          color: #ff5d17;
-          background-color: rgba(0,0,0,0);
+
+        #keyboard-state {
+            margin-right: 8px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 0px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
         }
-        #battery.critical {
-          color: #ff200c;
-          background-color: rgba(0,0,0,0);
+
+        #custom-mail {
+            margin-right: 8px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 0px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
         }
+
+        #mode {
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #clock {
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 0px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #custom-weather {
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 0px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #pulseaudio {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #pulseaudio.muted {
+            background-color: #90b1b1;
+            color: #2a5c45;
+        }
+
+        #custom-mem {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #cpu {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #temperature {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #temperature.critical {
+            background-color: #eb4d4b;
+        }
+
+        #backlight {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #network {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        #battery {
+            margin-right: 8px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
         #battery.charging {
-          color: #9ece6a;
-          background-color: rgba(0,0,0,0);
+            color: #ffffff;
+            background-color: #26A65B;
+        }
+
+        #battery.warning:not(.charging) {
+            background-color: #ffbe61;
+            color: black;
+        }
+
+        #battery.critical:not(.charging) {
+            background-color: #f53c3c;
+            color: #ffffff;
+            animation-name: blink;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        #tray {
+            padding-left: 16px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
+            transition: none;
+            color: #ffffff;
+            background: #383c4a;
+        }
+
+        @keyframes blink {
+            to {
+                background-color: #ffffff;
+                color: #000000;
+            }
         }
       '';
       settings = with host; {
         Main = {
-          layer = "top";
-          position = "top";
-          height = 16;
-          output = [
-            "${mainMonitor}"
-          ];
-          tray = { spacing = 5; };
-          #modules-center = [ "clock" ];
-          modules-left = [ "custom/menu" "wlr/workspaces" ];
-#            if programs.hyprland.enable == true then
-#              [ "custom/menu" "wlr/workspaces" ];
-#            else if programs.sway.enable == true then
-#              [ "sway/workspaces" "sway/window" "sway/mode" ]
-#            else [];
+          # "layer" = "top"; # Waybar at top layer
+          "position" = "top"; # Waybar position (top|bottom|left|right)
+          # "height": 30, // Waybar height (to be removed for auto height)
+          "margin" = "5 20 0 20";
+          # "width": 1280, // Waybar width
+          # Choose the order of the modules
+          modules-left = [ "custom/menu" "sway/workspaces" "sway/language" "keyboard-state" "custom/mail" "sway/mode"];
+          modules-center = ["clock" "custom/weather"];
+          modules-right = ["pulseaudio" "custom/mem" "cpu" "temperature" "backlight" "battery" "network" "tray"];
 
-          modules-right =
-            if hostName == "desktop" then
-              [ "custom/ds4" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
-            else
-              [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
 
-          "custom/pad" = {
-            format = "      ";
-            tooltip = false;
-          };
-          "custom/menu" = {
-            format = "<span font='16'></span>";
-            #on-click = ''${pkgs.rofi}/bin/rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=logout/suspend/reboot/shutdown"'';
-            #on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
-            on-click = ''~/.config/wofi/power.sh'';
-            on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
-            tooltip = false;
-          };
+          # ***************************
+          # *  mODULES CONFIGURATION  *
+          # ***************************
+
           "sway/workspaces" = {
-            format = "<span font='12'>{icon}</span>";
-            format-icons = {
-              "1"="";
-              "2"="";
-              "3"="";
-              "4"="";
-              "5"="";
-            };
-            all-outputs = true;
-            persistent_workspaces = {
-               "1" = [];
-               "2" = [];
-               "3" = [];
-               "4" = [];
-               "5" = [];
-            };
+              disable-scroll = true;
+              persistent_workspaces = {
+                  "1" = [];
+                  "2" = [];
+                  "3" = [];
+                  "4" = [];
+              };
           };
-          "wlr/workspaces" = {
-            format = "<span font='11'>{name}</span>";
-            #format = "<span font='12'>{icon}</span>";
-            #format-icons = {
-            #  "1"="";
-            #  "2"="";
-            #  "3"="";
-            #  "4"="";
-            #  "5"="";
-            #  "6"="";
-            #  "7"="";
-            #  "8"="";
-            #  "9"="";
-            #  "10"="";
-            #};
-            #all-outputs = true;
-            active-only = false;
-            on-click = "activate";
+
+          "sway/language" = {
+            "format" = "{} ";
+	          "min-length" = 5;
+	          "tooltip" = false;
           };
-          clock = {
-            format = "{:%b %d %H:%M}  ";
-            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-            #format-alt = "{:%A, %B %d, %Y} ";
+
+          "keyboard-state" = {
+              "numlock" = true;
+              "capslock" = true;
+              "format" = {
+                  "numlock" = " 𐄡 {icon}";
+                  "capslock" = "A {icon}";
+              };
+              "format-icons" = {
+                  "locked" = "🔒";
+                  "unlocked" = " ";
+              };
           };
-          cpu = {
-            format = " {usage}% <span font='11'></span> ";
-            interval = 1;
+
+          "sway/mode" = {
+              "format" = "<span style=\"italic\">{}</span>";
           };
-          disk = {
-            format = "{percentage_used}% <span font='11'></span>";
-            path = "/";
-            interval = 30;
+
+          "clock" = {
+              "timezone" = "Europe/Athens";
+              "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+              "format" = "{:%a, %d %b, %I:%M %p} 🕑";
           };
-          memory = {
-            format = "{}% <span font='11'></span>";
-            interval = 1;
+
+          "custom/weather" = {
+              "format" = "{}";
+              "tooltip" = true;
+              "interval" = 1800;
+              "exec" = "$HOME/.config/waybar/script/cy-live-weather --station LEFKOSIA";
+              "return-type" = "json";
           };
-          backlight = {
-            device = "intel_backlight";
-            format= "{percent}% <span font='11'>{icon}</span>";
-            format-icons = ["" ""];
-            on-scroll-down = "${pkgs.light}/bin/light -U 5";
-            on-scroll-up = "${pkgs.light}/bin/light -A 5";
-          };
-          battery = {
-            interval = 60;
-            states = {
-              warning = 30;
-              critical = 15;
-            };
-            format = "{capacity}% <span font='11'>{icon}</span>";
-            format-charging = "{capacity}% <span font='11'></span>";
-            format-icons = ["" "" "" "" ""];
-            max-length = 25;
-          };
-          network = {
-            format-wifi = "<span font='11'></span>";
-            format-ethernet = "<span font='11'></span>";
-            #format-ethernet = "<span font='11'></span> {ifname}: {ipaddr}/{cidr}";
-            format-linked = "<span font='11'>睊</span> {ifname} (No IP)";
-            format-disconnected = "<span font='11'>睊</span> Not connected";
-            #format-alt = "{ifname}: {ipaddr}/{cidr}";
-            tooltip-format = "{essid} {ipaddr}/{cidr}";
-            #on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
-          };
+
           pulseaudio = {
             format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
             format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
@@ -243,15 +342,73 @@
             on-click-right = "${pkgs.pamixer}/bin/pamixer --default-source -t";
             on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
-          "custom/sink" = {
-            format = "{}";
-            exec = "$HOME/.config/waybar/script/sink.sh";
-            interval = 2;
-            on-click = "$HOME/.config/waybar/script/switch.sh";
-            tooltip = false;
+
+          "custom/mem" = {
+              "format" = "{} ";
+              "interval" = 3;
+              "exec" = "free -h | awk '/Mem:/{printf $3}'";
+              "tooltip" = false;
           };
-          tray = {
-            icon-size = 13;
+
+          "temperature" = {
+              # "thermal-zone": 2,
+              # "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+              "critical-threshold" = 80;
+              # "format-critical": "{temperatureC}°C {icon}",
+              "format" = "{temperatureC}°C {icon}";
+              "format-icons" = ["" "" "" "" ""];
+              "tooltip" = false;
+          };
+
+          backlight = {
+            device = "intel_backlight";
+            format= "{percent}% <span font='11'>{icon}</span>";
+            format-icons = ["" ""];
+            on-scroll-down = "${pkgs.light}/bin/light -U 5";
+            on-scroll-up = "${pkgs.light}/bin/light -A 5";
+          };
+
+          battery = {
+            interval = 60;
+            states = {
+              warning = 30;
+              critical = 15;
+            };
+            format = "{capacity}% <span font='11'>{icon}</span>";
+            format-charging = "{capacity}% <span font='11'></span>";
+            format-icons = ["" "" "" "" ""];
+            max-length = 25;
+          };
+
+          "tray" = {
+              "icon-size" = 16;
+              "spacing" = 0;
+          };
+
+          "cpu" = {
+              "interval" = 10;
+              "format" = "{}% <span font='11'></span>";
+              "max-length" = 10;
+          };
+
+          network = {
+            format-wifi = "<span font='11'></span>";
+            format-ethernet = "<span font='11'></span>";
+            #format-ethernet = "<span font='11'></span> {ifname}: {ipaddr}/{cidr}";
+            format-linked = "<span font='11'>睊</span> {ifname} (No IP)";
+            format-disconnected = "<span font='11'>睊</span> Not connected";
+            #format-alt = "{ifname}: {ipaddr}/{cidr}";
+            tooltip-format = "{essid} {ipaddr}/{cidr}";
+            #on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
+          };
+
+          "custom/menu" = {
+            format = "<span font='16'> </span>";
+            #on-click = "${pkgs.rofi}/bin/rofi -show p -modi p:${pkgs.rofi-power-menu}/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi";
+            #on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
+            on-click = ''~/.config/wofi/power.sh'';
+            on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
+            tooltip = false;
           };
         };
         Sec = if hostName == "desktop" || hostName == "work" then {
@@ -366,11 +523,6 @@
             interval = 2;
             on-click = "$HOME/.config/waybar/script/switch.sh";
             tooltip = false;
-          };
-          "custom/ds4" = {
-            format = "{}";
-            exec = "$HOME/.config/waybar/script/ds4.sh";
-            interval = 60;
           };
         } else {};
       };
