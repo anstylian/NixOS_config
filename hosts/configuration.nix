@@ -20,7 +20,7 @@
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "input" ];
     shell = pkgs.zsh;                       # Default shell
   };
   security.sudo.wheelNeedsPassword = true; # User does need to give password when using sudo.
@@ -101,7 +101,7 @@
       jack.enable = true;
     };
     openssh = {                             # SSH: secure shell (remote connection to shell of server)
-      enable = true;                       # local: $ ssh <user>@<ip>
+      enable = false;                       # local: $ ssh <user>@<ip>
                                             # public:
                                             #   - port forward 22 TCP to server
                                             #   - in case you want to use the domain name insted of the ip:
@@ -110,7 +110,7 @@
                                             # generating a key:
                                             #   - $ ssh-keygen   |  ssh-copy-id <ip/domain>  |  ssh-add
                                             #   - if ssh-add does not work: $ eval `ssh-agent -s`
-     allowSFTP = false;                    # SFTP: secure file transfer protocol (send file to server)
+      allowSFTP = false;                    # SFTP: secure file transfer protocol (send file to server)
                                             # connect: $ sftp <user>@<ip/domain>
                                             #   or with file browser: sftp://<ip address>
                                             # commands:
