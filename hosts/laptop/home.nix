@@ -17,6 +17,7 @@
   imports =
     [
       ../../modules/hyprland/home.nix # Window Manager
+      ../../modules/window_manager/sway/home.nix # Window Manager
       ../../modules/programs/neovim
     ];
 
@@ -51,27 +52,5 @@
 #     lowLevelPercent = 20;
 #     iconType = null;
 #   };
-  };
-
-  gtk = {                                     # Theming
-    enable = true;
-    theme = {
-      name = "Dracula";
-      #name = "Catppuccin-Mocha-Compact-Mauve-Dark";
-      package = pkgs.dracula-theme;
-      #package = pkgs.catppuccin-gtk.override {
-      #  accents = ["mauve"];
-      #  size = "compact";
-      #  variant = "mocha";
-      #};
-    };
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-    font = {
-      #name = "JetBrains Mono Medium";
-      name = "FiraCode Nerd Font Mono Medium";
-    };                                        # Cursor is declared under home.pointerCursor
   };
 }

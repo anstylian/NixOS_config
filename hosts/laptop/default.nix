@@ -11,6 +11,7 @@
       ../../modules/display-manager
       ../../modules/desktop-environment
       ../../modules/hyprland
+      ../../modules/window_manager/sway
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -19,14 +20,17 @@
     loader = {
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/EFI";
+        efiSysMountPoint = "/boot";
       };
       grub = {
         enable = true;
-        devices = ["nodev"];
+        device = "nodev";
         efiSupport = true;
         useOSProber = true;
-        configurationLimit = 100;
+        configurationLimit = 20;
+      };
+      systemd-boot = {
+        configurationLimit = 20;
       };
       timeout = 5;
     };
