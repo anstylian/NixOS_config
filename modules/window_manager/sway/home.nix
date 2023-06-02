@@ -80,19 +80,20 @@
         };
       } else {};
       
-      workspaceOutputAssign = if host.hostName == "desktop" then [
-        {output = host.mainMonitor; workspace = "1";}
-        {output = host.mainMonitor; workspace = "2";}
-        {output = host.mainMonitor; workspace = "3";}
-        {output = host.secondMonitor; workspace = "4";}
-        {output = host.secondMonitor; workspace = "5";}
-        {output = host.secondMonitor; workspace = "6";}
-      ] else if host.hostName == "laptop" then [
-        {output = host.mainMonitor; workspace = "1";}
-        {output = host.mainMonitor; workspace = "2";}
-        {output = host.mainMonitor; workspace = "3";}
-      ] else [];
+#      workspaceOutputAssign = if host.hostName == "desktop" then [
+#        {output = host.mainMonitor; workspace = "1";}
+#        {output = host.mainMonitor; workspace = "2";}
+#        {output = host.mainMonitor; workspace = "3";}
+#        {output = host.secondMonitor; workspace = "4";}
+#        {output = host.secondMonitor; workspace = "5";}
+#        {output = host.secondMonitor; workspace = "6";}
+#      ] else if host.hostName == "laptop" then [
+#        {output = host.mainMonitor; workspace = "1";}
+#        {output = host.mainMonitor; workspace = "2";}
+#        {output = host.mainMonitor; workspace = "3";}
+#      ] else [];
       defaultWorkspace = "workspace number 1";
+      defaultBorder = "none";
 
       colors.focused = {
         background = "#999999";
@@ -103,16 +104,17 @@
       };
 
       keybindings = {                                   # Hotkeys
-        "${modifier}+Escape" = "exec swaymsg exit";     # Exit Sway
+        "${modifier}+Shift+e" = "exec swaymsg exit";     # Exit Sway
         "${modifier}+Return" = "exec ${terminal}";      # Open terminal
         "${modifier}+space" = "exec ${menu}";           # Open menu
-        "${modifier}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm"; # File Manager
+        "${modifier}+e+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm"; # File Manager
         "${modifier}+l" = "exec ${pkgs.swaylock-fancy}/bin/swaylock-fancy"; # Lock Screen
 
         "${modifier}+r" = "reload";                     # Reload environment
-        "${modifier}+q" = "kill";                       # Kill container
+        "${modifier}+q" = "kill";                       # Kill focused window
         "${modifier}+f" = "fullscreen toggle";          # Fullscreen
         "${modifier}+h" = "floating toggle";            # Floating
+        "${modifier}+Shift+h" = "focus mode_toggle";    # Floating
 
         "${modifier}+Left" = "focus left";              # Focus container in workspace
         "${modifier}+Right" = "focus right";
@@ -129,27 +131,48 @@
         "Alt+Left" = "workspace prev_on_output";        # Navigate to previous or next workspace on output if it exists
         "Alt+Right" = "workspace next_on_output";
 
-        "Alt+1" = "workspace number 1";                 # Open workspace x
-        "Alt+2" = "workspace number 2";
-        "Alt+3" = "workspace number 3";
+        #"Alt+1" = "workspace number 1";                 # Open workspace x
+        #"Alt+2" = "workspace number 2";
+        #"Alt+3" = "workspace number 3";
         #"Alt+4" = "workspace number 4";
         #"Alt+5" = "workspace number 5";
 
         "Alt+Shift+Left" = "move container to workspace prev, workspace prev";    # Move container to next available workspace and focus
         "Alt+Shift+Right" = "move container to workspace next, workspace next";
 
-        "Alt+Shift+1" = "move container to workspace number 1";     # Move container to specific workspace
-        "Alt+Shift+2" = "move container to workspace number 2";
-        "Alt+Shift+3" = "move container to workspace number 3";
-        "Alt+Shift+4" = "move container to workspace number 4";
-        "Alt+Shift+5" = "move container to workspace number 5";
+        # Reload the configuration file
+        "${modifier}+Shift+c" = "reload";
+#
+# Workspaces:
+#
+        # Switch to workspace
+        "${modifier}+1" = "workspace number 1";
+        "${modifier}+2" = "workspace number 2";
+        "${modifier}+3" = "workspace number 3";
+        "${modifier}+4" = "workspace number 4";
+        "${modifier}+5" = "workspace number 5";
+        "${modifier}+6" = "workspace number 6";
+        "${modifier}+7" = "workspace number 7";
+        "${modifier}+8" = "workspace number 8";
+        "${modifier}+9" = "workspace number 9";
+
+         # Move container to specific workspace
+        "${modifier}+Shift+1" = "move container to workspace number 1";
+        "${modifier}+Shift+2" = "move container to workspace number 2";
+        "${modifier}+Shift+3" = "move container to workspace number 3";
+        "${modifier}+Shift+4" = "move container to workspace number 4";
+        "${modifier}+Shift+5" = "move container to workspace number 5";
+        "${modifier}+Shift+6" = "move container to workspace number 6";
+        "${modifier}+Shift+7" = "move container to workspace number 7";
+        "${modifier}+Shift+8" = "move container to workspace number 8";
+        "${modifier}+Shift+9" = "move container to workspace number 9";
 
         "Control+Up" = "resize shrink height 20px";     # Resize container
         "Control+Down" = "resize grow height 20px";
         "Control+Left" = "resize shrink width 20px";
         "Control+Right" = "resize grow width 20px";
 
-        "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui"; # Screenshots
+        # "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui"; # Screenshots
 
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 10";   #Volume control
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 10";
@@ -161,6 +184,12 @@
         #
         "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U  5";      # Display brightness control
         "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
+
+
+        # Switch the current container between different layout styles
+        "${modifier}+s" = "layout stacking";
+        "${modifier}+w" = "layout tabbed";
+        "${modifier}+e" = "layout toggle split";
       };
     };
     extraConfig = ''

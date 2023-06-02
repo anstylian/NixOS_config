@@ -275,12 +275,7 @@
 
           "sway/workspaces" = {
               disable-scroll = true;
-              persistent_workspaces = {
-                  "1" = [];
-                  "2" = [];
-                  "3" = [];
-                  "4" = [];
-              };
+              all-outputs = true;
           };
 
           "sway/language" = {
@@ -453,7 +448,7 @@
             #  "9"="";
             #  "10"="";
             #};
-            active-only = false;
+            active-only = true;
             on-click = "activate";
             #on-scroll-up = "hyprctl dispatch workspace e+1";
             #on-scroll-down = "hyprctl dispatch workspace e-1";

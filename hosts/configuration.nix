@@ -79,6 +79,7 @@
       tree
       alacritty
       binutils
+      file
     ];
   };
 
