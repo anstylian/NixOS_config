@@ -11,7 +11,7 @@
     config = rec {                                      # Sway configuration
       modifier = "Mod4";
       terminal = "${pkgs.alacritty}/bin/alacritty";
-      menu = "${pkgs.wofi}/bin/wofi -show drun";
+      menu = "${pkgs.wofi}/bin/wofi --show drun";
 
       startup = [                                       # Run commands on Sway startup
         {command = "${pkgs.autotiling}/bin/autotiling"; always = true;} # Tiling Script
@@ -55,7 +55,8 @@
       };
 
       output = with host; if host.hostName == "desktop" then {
-        "*".bg = "~/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png fill";#
+        # "*".bg = "~/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png fill";#
+        "*".bg = "~/Downloads/WallpaperDog-5478970.jpg fill";
         "*".scale = "1";#
 #        "${secondMonitor}" = {
 #          mode = "1920x1080";
@@ -70,7 +71,8 @@
         #  pos = "3840 0";
         #};
       } else if host.hostName == "laptop" then {
-        "*".bg = "~/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png fill";#
+        # "*".bg = "~/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png fill";#
+        "*".bg = "~/Downloads/WallpaperDog-5478970.jpg fill";
         "*".scale = "1";#
         "${mainMonitor}" = {
           mode = "1920x108";
