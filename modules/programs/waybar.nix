@@ -47,6 +47,7 @@
 
         #workspaces {
             margin-right: 8px;
+            margin-left: 8px;
             border-radius: 0px 0px 10px 10px;
             transition: none;
             background: #383c4a;
@@ -90,8 +91,8 @@
 
         #language {
             padding-left: 16px;
-            padding-right: 8px;
-            border-radius: 0px 0px 0px 10px;
+            padding-right: 16px;
+            border-radius: 0px 0px 10px 10px;
             transition: none;
             color: #ffffff;
             background: #383c4a;
@@ -264,7 +265,7 @@
           "margin" = "5 20 0 20";
           # "width": 1280, // Waybar width
           # Choose the order of the modules
-          modules-left = [ "custom/menu" "sway/workspaces" "sway/language" "keyboard-state" "custom/mail" "sway/mode"];
+          modules-left = [ "custom/menu" "sway/language" "sway/workspaces" "sway/mode"];
           modules-center = ["clock" "custom/weather"];
           modules-right = ["pulseaudio" "custom/mem" "cpu" "temperature" "backlight" "battery" "network" "tray"];
 
@@ -425,6 +426,7 @@
             format = "      ";
             tooltip = false;
           };
+
           "custom/menu" = {
             format = "<span font='16'></span>";
             #on-click = "${pkgs.rofi}/bin/rofi -show p -modi p:${pkgs.rofi-power-menu}/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi";

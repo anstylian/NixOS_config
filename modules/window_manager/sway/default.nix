@@ -25,7 +25,7 @@
     sway = {                              # Tiling Wayland compositor & window manager
       enable = true;
       extraPackages = with pkgs; [
-        autotiling      # Tiling Script
+#        autotiling      # Tiling Script
         wev             # Input viewer
         wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
         wlr-randr

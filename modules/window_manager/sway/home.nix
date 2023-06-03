@@ -13,8 +13,8 @@
       terminal = "${pkgs.alacritty}/bin/alacritty";
       menu = "${pkgs.wofi}/bin/wofi --show drun";
 
-      startup = [                                       # Run commands on Sway startup
-        {command = "${pkgs.autotiling}/bin/autotiling"; always = true;} # Tiling Script
+#      startup = [                                       # Run commands on Sway startup
+#        {command = "${pkgs.autotiling}/bin/autotiling"; always = true;} # Tiling Script
         ##{command = ''
         ##  ${pkgs.swayidle}/bin/swayidle -w \
         ##      before-sleep '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
@@ -26,7 +26,7 @@
         #    resume 'swaymsg "output * dpms on"' \
         #    before-sleep '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
         #''; always = true;}                            # Auto lock\
-      ];
+#      ];
 
       bars = [];                                        # No bar because using Waybar
 
@@ -80,27 +80,18 @@
         };
       } else {};
       
-#      workspaceOutputAssign = if host.hostName == "desktop" then [
-#        {output = host.mainMonitor; workspace = "1";}
-#        {output = host.mainMonitor; workspace = "2";}
-#        {output = host.mainMonitor; workspace = "3";}
-#        {output = host.secondMonitor; workspace = "4";}
-#        {output = host.secondMonitor; workspace = "5";}
-#        {output = host.secondMonitor; workspace = "6";}
-#      ] else if host.hostName == "laptop" then [
-#        {output = host.mainMonitor; workspace = "1";}
-#        {output = host.mainMonitor; workspace = "2";}
-#        {output = host.mainMonitor; workspace = "3";}
-#      ] else [];
       defaultWorkspace = "workspace number 1";
-      defaultBorder = "none";
+      window = {
+        titlebar = false;
+        border = 3;
+      };
 
       colors.focused = {
-        background = "#999999";
-        border = "#999999";
-        childBorder = "#999999";
+        background = "#dfdfdf";
+        border = "#dfdfdf";
+        childBorder = "#dfdfdf";
         indicator = "#212121";
-        text = "#999999";
+        text = "#dfdfdf";
       };
 
       keybindings = {                                   # Hotkeys
