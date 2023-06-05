@@ -95,10 +95,10 @@
       };
 
       keybindings = {                                   # Hotkeys
-        "${modifier}+Shift+e" = "exec swaymsg exit";     # Exit Sway
+        "${modifier}+Shift+q" = "exec swaymsg exit";     # Exit Sway
         "${modifier}+Return" = "exec ${terminal}";      # Open terminal
         "${modifier}+space" = "exec ${menu}";           # Open menu
-        "${modifier}+e+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm"; # File Manager
+        "${modifier}+Shift+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm"; # File Manager
         "${modifier}+l" = "exec ${pkgs.swaylock-fancy}/bin/swaylock-fancy"; # Lock Screen
 
         "${modifier}+r" = "reload";                     # Reload environment
