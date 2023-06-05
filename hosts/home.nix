@@ -139,6 +139,8 @@
       #
       # Flatpak
       #obs-studio       # Recording/Live Streaming
+
+      ntfs3g            # mount ntfs filesystem
     ];
     file.".config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png".source = ../modules/themes/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png;
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
