@@ -36,6 +36,8 @@
       #tlp                                # Power management
 
       alsa-utils                          # Audio control
+
+      dutree
     ];
   };
 
