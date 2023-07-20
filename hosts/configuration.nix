@@ -103,7 +103,7 @@
       jack.enable = true;
     };
     openssh = {                             # SSH: secure shell (remote connection to shell of server)
-      enable = false;                       # local: $ ssh <user>@<ip>
+      enable = true;                        # local: $ ssh <user>@<ip>
                                             # public:
                                             #   - port forward 22 TCP to server
                                             #   - in case you want to use the domain name insted of the ip:

@@ -28,6 +28,14 @@
         efiSupport = true;
         useOSProber = true;
         configurationLimit = 20;
+        extraEntries = ''
+          menuentry "Windows 10" {
+            insmod part_gpt
+            insmod chain
+            set root='(hd0,gpt5)'
+            chainloader (hd0,1)+1
+          }
+        '';
       };
       systemd-boot = {
         configurationLimit = 20;

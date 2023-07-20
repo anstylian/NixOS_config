@@ -7,7 +7,6 @@
 {
   wayland.windowManager.sway = {
     enable = true;
-    systemdIntegration = true;                          # Enable sway-session.target to link to graphical-session.target for systemd
     config = rec {                                      # Sway configuration
       modifier = "Mod4";
       terminal = "${pkgs.alacritty}/bin/alacritty";
@@ -158,10 +157,10 @@
         "${modifier}+Shift+8" = "move container to workspace number 8";
         "${modifier}+Shift+9" = "move container to workspace number 9";
 
-        "Control+Up" = "resize shrink height 20px";     # Resize container
-        "Control+Down" = "resize grow height 20px";
-        "Control+Left" = "resize shrink width 20px";
-        "Control+Right" = "resize grow width 20px";
+        "${modifier}+Control+Up" = "resize shrink height 20px";     # Resize container
+        "${modifier}+Control+Down" = "resize grow height 20px";
+        "${modifier}+Control+Left" = "resize shrink width 20px";
+        "${modifier}+Control+Right" = "resize grow width 20px";
 
         # "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui"; # Screenshots
 
