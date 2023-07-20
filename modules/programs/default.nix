@@ -13,4 +13,5 @@
 [
   ./alacritty.nix
   ./wofi.nix
+  ./git.nix
 ]
