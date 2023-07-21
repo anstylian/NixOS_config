@@ -23,6 +23,8 @@
     homeDirectory = "/home/${user}";
 
     packages = with pkgs; [
+      busybox
+
       # Terminal
       btop              # Resource Manager
       nitch             # Minimal fetch

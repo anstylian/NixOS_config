@@ -38,6 +38,8 @@
       alsa-utils                          # Audio control
 
       dutree
+
+      zathura
     ];
   };
 
