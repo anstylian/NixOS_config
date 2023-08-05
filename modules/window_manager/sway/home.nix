@@ -2,8 +2,12 @@
 #  Sway Home manager configuration
 #
 
-{ config, lib, pkgs, host, ... }:
+{ pkgs, host, ... }:
 
+let 
+      workspace_terminal = "1:terminal";
+      workspace_www = "2:www";
+in
 {
   wayland.windowManager.sway = {
     enable = true;
@@ -79,7 +83,7 @@
         };
       } else {};
       
-      defaultWorkspace = "workspace number 1";
+      defaultWorkspace = "workspace 1:terminal";
       window = {
         titlebar = false;
         border = 3;
@@ -136,8 +140,8 @@
 # Workspaces:
 #
         # Switch to workspace
-        "${modifier}+1" = "workspace number 1";
-        "${modifier}+2" = "workspace number 2";
+        "${modifier}+1" = "workspace ${workspace_terminal}"; # 1:terminal;
+        "${modifier}+2" = "workspace ${workspace_www}";
         "${modifier}+3" = "workspace number 3";
         "${modifier}+4" = "workspace number 4";
         "${modifier}+5" = "workspace number 5";
@@ -147,8 +151,8 @@
         "${modifier}+9" = "workspace number 9";
 
          # Move container to specific workspace
-        "${modifier}+Shift+1" = "move container to workspace number 1";
-        "${modifier}+Shift+2" = "move container to workspace number 2";
+        "${modifier}+Shift+1" = "move container to workspace ${workspace_terminal}";
+        "${modifier}+Shift+2" = "move container to workspace ${workspace_www}";
         "${modifier}+Shift+3" = "move container to workspace number 3";
         "${modifier}+Shift+4" = "move container to workspace number 4";
         "${modifier}+Shift+5" = "move container to workspace number 5";
