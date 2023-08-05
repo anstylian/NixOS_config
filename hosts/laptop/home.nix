@@ -37,9 +37,12 @@
 
       alsa-utils                          # Audio control
 
+      dunst            # Notifications
+
       dutree
 
       zathura
+      obsidian
     ];
   };
 
