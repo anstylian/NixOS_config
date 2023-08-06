@@ -5,9 +5,7 @@
 #  I refer to the README and other org document on how to use these files.
 #  Currently and possibly forever a Work In Progress.
 #
-#  flake.nix *             
-#   ├─ ./hosts
-#   │   └─ default.nix
+#  flake.nix
 #
 
 {
@@ -22,18 +20,13 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      nixgl = {                                                             # OpenGL
-        url = "github:guibou/nixGL";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-
       hyprland = {                                                          # Official Hyprland flake
         url = "github:vaxerski/Hyprland";                                   # Add "hyprland.nixosModules.default" to the host modules
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
       nixos-hardware = {
-	url = "github:NixOS/nixos-hardware/master";
+	      url = "github:NixOS/nixos-hardware/master";
       };
 
       astro-nvim = {
@@ -42,7 +35,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixgl, hyprland, nixos-hardware, astro-nvim, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, hyprland, nixos-hardware, astro-nvim, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "angelos";
       location = "$HOME/.setup";
