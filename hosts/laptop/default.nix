@@ -14,31 +14,24 @@
       ../../modules/window_manager/sway
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-bioot.enable = true;
   boot = { 
     loader = {
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      grub = {
+      # grub = {
+      #   enable = true;
+      #   device = "nodev";
+      #   efiSupport = true;
+      #   useOSProber = true;
+      #   configurationLimit = 20;
+      # };
+      systemd-boot = {                    # Use the systemd-boot EFI boot loader.
         enable = true;
-        device = "nodev";
-        efiSupport = true;
-        useOSProber = true;
         configurationLimit = 20;
-        extraEntries = ''
-          menuentry "Windows 10" {
-            insmod part_gpt
-            insmod chain
-            set root='(hd0,gpt5)'
-            chainloader (hd0,1)+1
-          }
-        '';
-      };
-      systemd-boot = {
-        configurationLimit = 20;
+        consoleMode = "max";
+        editor = false;
       };
       timeout = 5;
     };
