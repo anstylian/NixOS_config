@@ -49,14 +49,14 @@
   security.rtkit.enable = true;
   security.polkit.enable = true;
 
-  fonts.fonts = with pkgs; [                # Fonts
-    carlito                                 # NixOS
-    vegur                                   # NixOS
+  fonts.packages = with pkgs; [               # Fonts
+    carlito                                   # NixOS
+    vegur                                     # NixOS
     source-code-pro
     jetbrains-mono
-    font-awesome                            # Icons
-    corefonts                               # MS
-    (nerdfonts.override {                   # Nerdfont Icons override
+    font-awesome                              # Icons
+    corefonts                                 # MS
+    (nerdfonts.override {                     # Nerdfont Icons override
       fonts = [
         "FiraCode"
       ];
