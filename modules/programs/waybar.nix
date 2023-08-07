@@ -245,9 +245,13 @@
 }
 
 #workspaces button.urgent {
-    border-color: #2f343a; /* Sway palette: urgent/border */
+    border-color: #2f343a;  /* Sway palette: urgent/border */
     color: #ffffff; /* Sway palette: urgent/text */
     background-color: #900000; /* Sway palette: urgent/background */
+}
+
+#custom-menu {
+    color: #96AFF8;  /* #A7C7E7; */
 }
       '';
       settings = with host; {
@@ -260,6 +264,7 @@
             "height" = 32;
 
             "modules-left" = [
+                "custom/menu"
                 "sway/workspaces"
                 "sway/mode"
             ];
