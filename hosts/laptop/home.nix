@@ -16,9 +16,10 @@
 {
   imports =
     [
-      ../../modules/hyprland/home.nix # Window Manager
-      ../../modules/window_manager/sway/home.nix # Window Manager
+#       ../../modules/hyprland/home.nix             # Window Manager
+      ../../modules/window_manager/sway/home.nix  # Window Manager
       ../../modules/programs/neovim
+      ../../modules/programs/swaylock/home.nix    # Screen lock
     ];
 
   home = {                                # Specific packages for laptop

@@ -11,7 +11,7 @@
 #               └─ home.nix *
 #
 
-{ config, lib, pkgs, host, ... }:
+{ pkgs, host, ... }:
 
 let
   touchpad = with host;

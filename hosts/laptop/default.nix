@@ -10,8 +10,9 @@
       ./hardware-configuration.nix
       ../../modules/display-manager
       ../../modules/desktop-environment
-      ../../modules/hyprland
+#       ../../modules/hyprland
       ../../modules/window_manager/sway
+      ../../modules/programs/swaylock
     ];
 
   boot = { 

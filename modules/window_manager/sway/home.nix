@@ -58,8 +58,7 @@ in
       };
 
       output = with host; if host.hostName == "desktop" then {
-        # "*".bg = "~/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png fill";#
-        "*".bg = "~/Downloads/WallpaperDog-5478970.jpg fill";
+        "*".bg = "$HOME/.config/wallpaper.jpg fill";
         "*".scale = "1";#
 #        "${secondMonitor}" = {
 #          mode = "1920x1080";
@@ -75,7 +74,7 @@ in
         #};
       } else if host.hostName == "laptop" then {
         # "*".bg = "~/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png fill";#
-        "*".bg = "~/Downloads/WallpaperDog-5478970.jpg fill";
+        "*".bg = "$HOME/.config/wallpaper.jpg fill";
         "*".scale = "1";#
         "${mainMonitor}" = {
           mode = "1920x108";
@@ -190,10 +189,8 @@ in
       set $opacity 0.8
       for_window [class=".*"] opacity 0.95
       for_window [app_id=".*"] opacity 0.95
-      for_window [app_id="pcmanfm"] opacity 0.95, floating enable
       for_window [app_id="Alacritty"] opacity $opacity
       for_window [title="drun"] opacity $opacity
-      for_window [class="Emacs"] opacity $opacity
       for_window [app_id="pavucontrol"] floating enable, sticky
       for_window [app_id=".blueman-manager-wrapped"] floating enable
       for_window [title="Picture in picture"] floating enable, move position 1205 634, resize set 700 400, sticky enable
@@ -204,31 +201,5 @@ in
       export XDG_SESSION_DESKTOP=sway
       export XDG_CURRENT_DESKTOP=sway
     '';
-  };
-
-  programs.swaylock.settings = {
-    image = "$HOME/.config/ARTISTIC-COLORFUL-AI-LANDSCAPE-1192023.png";
-    color = "000000f0";
-    font-size = "24";
-    indicator-idle-visible = false;
-    indicator-radius = 100;
-    indicator-thickness = 20;
-    inside-color = "00000000";
-    inside-clear-color = "00000000";
-    inside-ver-color = "00000000";
-    inside-wrong-color = "00000000";
-    key-hl-color = "79b360";
-    line-color = "000000f0";
-    line-clear-color = "000000f0";
-    line-ver-color = "000000f0";
-    line-wrong-color = "000000f0";
-    ring-color = "ffffff50";
-    ring-clear-color = "bbbbbb50";
-    ring-ver-color = "bbbbbb50";
-    ring-wrong-color = "b3606050";
-    text-color = "ffffff";
-    text-ver-color = "ffffff";
-    text-wrong-color = "ffffff";
-    show-failed-attempts = true;
   };
 }
