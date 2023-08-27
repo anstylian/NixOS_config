@@ -89,11 +89,11 @@ in
       };
 
       colors.focused = {
-        background = "#dfdfdf";
+        background = "#222222";
         border = "#dfdfdf";
         childBorder = "#dfdfdf";
         indicator = "#212121";
-        text = "#dfdfdf";
+        text = "#ffffff";
       };
 
       keybindings = {                                   # Hotkeys
@@ -189,7 +189,7 @@ in
       set $opacity 0.8
       for_window [class=".*"] opacity 0.95
       for_window [app_id=".*"] opacity 0.95
-      for_window [app_id="Alacritty"] opacity $opacity
+      for_window [app_id="Alacritty"] opacity 1
       for_window [title="drun"] opacity $opacity
       for_window [app_id="pavucontrol"] floating enable, sticky
       for_window [app_id=".blueman-manager-wrapped"] floating enable
