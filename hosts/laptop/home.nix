@@ -20,6 +20,7 @@
       ../../modules/window_manager/sway/home.nix  # Window Manager
       ../../modules/programs/neovim
       ../../modules/programs/swaylock/home.nix    # Screen lock
+      ../../modules/programs/mako.nix
       ../../modules/shell/tmux/home.nix
     ];
 
@@ -39,7 +40,7 @@
 
       alsa-utils                          # Audio control
 
-      dunst            # Notifications
+      # dunst            # Notifications
 
       dutree
 
