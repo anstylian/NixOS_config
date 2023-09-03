@@ -20,6 +20,7 @@
       ../../modules/window_manager/sway/home.nix  # Window Manager
       ../../modules/programs/neovim
       ../../modules/programs/swaylock/home.nix    # Screen lock
+      ../../modules/shell/tmux/home.nix
     ];
 
   home = {                                # Specific packages for laptop

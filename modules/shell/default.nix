@@ -13,5 +13,8 @@
 [
   ./zsh.nix
   ./direnv.nix
-  ./tmux.nix
+  ./tmux/tmux.nix
 ]
+
+
+
