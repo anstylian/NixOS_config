@@ -14,17 +14,18 @@
 { lib, inputs, nixpkgs, home-manager, user, location, hyprland, nixos-hardware, astro-nvim, ... }:
 
 let
-  system = "x86_64-linux";                                  # System architecture
+  system = "x86_64-linux"; # System architecture
 
   pkgs = import nixpkgs {
     inherit system;
-    config.allowUnfree = true;                              # Allow proprietary software
+    config.allowUnfree = true; # Allow proprietary software
   };
 
   lib = nixpkgs.lib;
 in
 {
-  laptop = lib.nixosSystem {                                # Laptop profile
+  laptop = lib.nixosSystem {
+    # Laptop profile
     inherit system;
     specialArgs = {
       inherit inputs user location;
@@ -38,26 +39,28 @@ in
       ./configuration.nix
       ./laptop
       nixos-hardware.nixosModules.dell-precision-3541
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit user;
-	  inherit astro-nvim;
-	  inherit inputs;
+          inherit astro-nvim;
+          inherit inputs;
           host = {
             hostName = "laptop";
             mainMonitor = "eDP-1";
-            secondMonitor = "DP-1";   #DP1            | DisplayPort-1
+            secondMonitor = "DP-1"; #DP1            | DisplayPort-1
           };
         };
         home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
+          imports = [ (import ./home.nix) (import ./laptop/home.nix) ];
         };
       }
     ];
   };
-  vm = lib.nixosSystem {                                # Laptop profile
+  vm = lib.nixosSystem {
+    # Laptop profile
     inherit system;
     specialArgs = {
       inherit inputs user location;
@@ -68,19 +71,20 @@ in
     modules = [
       ./configuration.nix
       ./vm
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           inherit user;
-	  inherit astro-nvim;
-	  inherit inputs;
+          inherit astro-nvim;
+          inherit inputs;
           host = {
             hostName = "vm";
           };
         };
         home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./vm/home.nix)];
+          imports = [ (import ./home.nix) (import ./vm/home.nix) ];
         };
       }
     ];
