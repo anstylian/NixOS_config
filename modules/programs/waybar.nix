@@ -297,6 +297,8 @@
                 "format-icons" = {
                     "1:terminal" = " ";
                     "2:www" = "";
+                    "3:reading" = "🕮 ";
+                    "4:coding" = "⌨ ";
                     "default" = "";
                     "urgent" = " ";
                 };

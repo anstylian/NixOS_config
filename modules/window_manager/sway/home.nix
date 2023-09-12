@@ -7,6 +7,8 @@
 let 
       workspace_terminal = "1:terminal";
       workspace_www = "2:www";
+      workspace_reading = "3:reading";
+      workspace_coding = "4:coding";
 in
 {
   wayland.windowManager.sway = {
@@ -52,7 +54,7 @@ in
           natural_scroll = "enabled";
         };
         "type:keyboard" = {
-          xkb_layout = "us";
+          xkb_layout = "us,gr";
           xkb_numlock = "enabled";
         };
       };
@@ -141,8 +143,8 @@ in
         # Switch to workspace
         "${modifier}+1" = "workspace ${workspace_terminal}"; # 1:terminal;
         "${modifier}+2" = "workspace ${workspace_www}";
-        "${modifier}+3" = "workspace number 3";
-        "${modifier}+4" = "workspace number 4";
+        "${modifier}+3" = "workspace ${workspace_reading}";
+        "${modifier}+4" = "workspace ${workspace_coding}";
         "${modifier}+5" = "workspace number 5";
         "${modifier}+6" = "workspace number 6";
         "${modifier}+7" = "workspace number 7";
@@ -152,8 +154,8 @@ in
          # Move container to specific workspace
         "${modifier}+Shift+1" = "move container to workspace ${workspace_terminal}";
         "${modifier}+Shift+2" = "move container to workspace ${workspace_www}";
-        "${modifier}+Shift+3" = "move container to workspace number 3";
-        "${modifier}+Shift+4" = "move container to workspace number 4";
+        "${modifier}+Shift+3" = "move container to workspace ${workspace_reading}";
+        "${modifier}+Shift+4" = "move container to workspace ${workspace_coding}";
         "${modifier}+Shift+5" = "move container to workspace number 5";
         "${modifier}+Shift+6" = "move container to workspace number 6";
         "${modifier}+Shift+7" = "move container to workspace number 7";
