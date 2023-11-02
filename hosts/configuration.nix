@@ -12,6 +12,7 @@
 #
 
 { config, lib, pkgs, inputs, user, ... }:
+# { config, lib, pkgs, inputs, user, system, waybar-cy-live-weather, ... }:
 
 {
   imports = 
@@ -20,7 +21,7 @@
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "input" ];
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" "input" "plugdev" ];
     shell = pkgs.zsh;                       # Default shell
   };
   security.sudo.wheelNeedsPassword = true; # User does need to give password when using sudo.
@@ -38,6 +39,7 @@
       LC_TIME = "en_US.UTF-8";
       LC_MONETARY = "en_US.UTF-8";
     };
+
   };
 
   console = {
@@ -71,7 +73,7 @@
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
       vim
-      neovim
+      # neovim
       killall
       pciutils
       usbutils
@@ -80,6 +82,9 @@
       alacritty
       binutils
       file
+
+      # inputs.waybar-cy-live-weather.packages.${system}.default
+
     ];
   };
 

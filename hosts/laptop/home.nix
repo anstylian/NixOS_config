@@ -11,25 +11,27 @@
 #              └─ home.nix
 #
 
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 
 {
   imports =
     [
-#       ../../modules/hyprland/home.nix             # Window Manager
-      ../../modules/window_manager/sway/home.nix  # Window Manager
+      #       ../../modules/hyprland/home.nix             # Window Manager
+      ../../modules/window_manager/sway/home.nix # Window Manager
       ../../modules/programs/neovim
-      ../../modules/programs/swaylock/home.nix    # Screen lock
+      ../../modules/programs/swaylock/home.nix # Screen lock
       ../../modules/programs/mako.nix
       ../../modules/shell/tmux/home.nix
     ];
 
-  home = {                                # Specific packages for laptop
+
+  home = {
+    # Specific packages for laptop
     packages = with pkgs; [
       mpvpaper
       mpv
       # Applications
-      libreoffice                         # Office packages
+      libreoffice # Office packages
 
       # Display
       #light                              # xorg.xbacklight not supported. Other option is just use xrandr.
@@ -38,7 +40,7 @@
       #auto-cpufreq                       # Power management
       #tlp                                # Power management
 
-      alsa-utils                          # Audio control
+      alsa-utils # Audio control
 
       # dunst            # Notifications
 
@@ -46,6 +48,9 @@
 
       zathura
       obsidian
+
+      signal-desktop
+
     ];
   };
 
@@ -53,14 +58,16 @@
     alacritty.settings.font.size = 11;
   };
 
-  services = {                            # Applets
-    blueman-applet.enable = true;         # Bluetooth
+  services = {
+    # Applets
+    blueman-applet.enable = true; # Bluetooth
     network-manager-applet.enable = true; # Network
-#   cbatticon = {
-#     enable = true;
-#     criticalLevelPercent = 10;
-#     lowLevelPercent = 20;
-#     iconType = null;
-#   };
+    #   cbatticon = {
+    #     enable = true;
+    #     criticalLevelPercent = 10;
+    #     lowLevelPercent = 20;
+    #     iconType = null;
+    #   };
   };
+
 }
