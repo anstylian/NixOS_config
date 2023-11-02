@@ -59,7 +59,7 @@ in
     neovim
     nvim-open
 
-#    nodejs # copilot
+    nodejs # copilot
     vale
     terraform-ls
     nodePackages.pyright
@@ -91,10 +91,6 @@ in
     nodePackages.prettier
     stylua
     # does not build yet on aarch64
-
-    lazygit
-    gdu
-    python3
   ] ++ lib.optional (pkgs.stdenv.hostPlatform.system == "x86_64-linux") pkgs.deno; # lsp
   xdg.dataHome = "${config.home.homeDirectory}/.data";
   xdg.dataFile."nvim/lazy/telescope-fzf-native.nvim/build/libfzf.so".source = "${pkgs.vimPlugins.telescope-fzf-native-nvim}/build/libfzf.so";
