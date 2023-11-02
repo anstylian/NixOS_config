@@ -83,7 +83,7 @@
       binutils
       file
 
-      # inputs.waybar-cy-live-weather.packages.${system}.default
+      inputs.waybar-cy-live-weather.packages.${system}.default
 
     ];
   };

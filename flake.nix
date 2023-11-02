@@ -26,12 +26,6 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      # hyprland = {
-      #   # Official Hyprland flake
-      #   url = "github:vaxerski/Hyprland"; # Add "hyprland.nixosModules.default" to the host modules
-      #   inputs.nixpkgs.follows = "nixpkgs";
-      # };
-
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware/master";
       };
@@ -41,13 +35,13 @@
         flake = false;
       };
 
-      # waybar-cy-live-weather = {
-      #   url = "/home/angelos/Documents/my_repos/waybar-cy-live-weather";
-      #   inputs.nixpkgs.follows = "nixpkgs";
-      # };
+      waybar-cy-live-weather = {
+        url = "github:anstylian/waybar-cy-live-weather";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, astro-nvim, ... }: # waybar-cy-live-weather, ... }: # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, astro-nvim, waybar-cy-live-weather, ... }: # Function that tells my flake which to use and what do what to do with the dependencies.
     let # Variables that can be used in the config files.
       user = "angelos";
       location = "$HOME/.setup";
@@ -59,8 +53,8 @@
         import ./hosts {
           # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user location nixos-hardware astro-nvim; # Also inherit home-manager so it does not need to be defined here.
-          # inherit inputs nixpkgs home-manager user location hyprland nixos-hardware astro-nvim waybar-cy-live-weather; # Also inherit home-manager so it does not need to be defined here.
+          # inherit inputs nixpkgs home-manager user location nixos-hardware astro-nvim; # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager user location nixos-hardware astro-nvim waybar-cy-live-weather; # Also inherit home-manager so it does not need to be defined here.
         }
       );
     };
