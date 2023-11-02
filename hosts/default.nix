@@ -11,8 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, user, location, nixos-hardware, astro-nvim, ...}:
-# { lib, inputs, nixpkgs, home-manager, user, location, nixos-hardware, astro-nvim, waybar-cy-live-weather, ...}:
+{ lib, inputs, nixpkgs, home-manager, user, location, nixos-hardware, astro-nvim, petclinic, ... }:
 
 let
   system = "x86_64-linux"; # System architecture
@@ -36,7 +35,13 @@ in
       };
     };
     modules = [
-      # hyprland.nixosModules.default
+      petclinic.nixosModules.default
+      ({ pkgs, ... }: {
+        services.petclinic = {
+          enable = true;
+        };
+      })
+
       ./configuration.nix
       ./laptop
       nixos-hardware.nixosModules.dell-precision-3541

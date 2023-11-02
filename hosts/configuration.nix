@@ -12,7 +12,6 @@
 #
 
 { config, lib, pkgs, inputs, user, ... }:
-# { config, lib, pkgs, inputs, user, system, waybar-cy-live-weather, ... }:
 
 {
   imports = 
@@ -82,9 +81,6 @@
       alacritty
       binutils
       file
-
-      inputs.waybar-cy-live-weather.packages.${system}.default
-
     ];
   };
 

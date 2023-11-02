@@ -156,6 +156,29 @@
         "type": "github"
       }
     },
+    "petclinic": {
+      "inputs": {
+        "cargo2nix": "cargo2nix",
+        "flake-utils": [
+          "petclinic",
+          "cargo2nix",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1699117365,
+        "narHash": "sha256-2yg2MkH4rW4hMm8/djlbO6RzvFWq+Y2i0hnYR/yWl2s=",
+        "path": "/home/angelos/Documents/git/petclinic",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/angelos/Documents/git/petclinic",
+        "type": "path"
+      }
+    },
     "root": {
       "inputs": {
         "astro-nvim": "astro-nvim",
@@ -163,18 +186,18 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "waybar-cy-live-weather": "waybar-cy-live-weather"
+        "petclinic": "petclinic"
       }
     },
     "rust-overlay": {
       "inputs": {
         "flake-utils": [
-          "waybar-cy-live-weather",
+          "petclinic",
           "cargo2nix",
           "flake-utils"
         ],
         "nixpkgs": [
-          "waybar-cy-live-weather",
+          "petclinic",
           "cargo2nix",
           "nixpkgs"
         ]
@@ -205,32 +228,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "waybar-cy-live-weather": {
-      "inputs": {
-        "cargo2nix": "cargo2nix",
-        "flake-utils": [
-          "waybar-cy-live-weather",
-          "cargo2nix",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1698917295,
-        "narHash": "sha256-19SzKL7BAuIqcoqZGS67f9pk1cuOYnk3cY6/SR42/Bo=",
-        "owner": "anstylian",
-        "repo": "waybar-cy-live-weather",
-        "rev": "56ea9459c3d9f12d62f8f010d0bfc3cedcddbcc4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anstylian",
-        "repo": "waybar-cy-live-weather",
         "type": "github"
       }
     }
