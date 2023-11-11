@@ -5,28 +5,49 @@
 
 {
   imports =
-    [ 
+    [
       (modulesPath + "/installer/scan/not-detected.nix")
-#      "../../../modules/hardware"
+      #      "../../../modules/hardware"
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+      kernelModules = [ "kvm-intel" ];
+    };
+    loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      systemd-boot = {
+        # Use the systemd-boot EFI boot loader.
+        enable = true;
+        configurationLimit = 20;
+        consoleMode = "max";
+        editor = false;
+      };
+      timeout = 5;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+    supportedFilesystems = [ "ntfs" ];
+  };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/58f7f44e-40f4-416d-8f7d-f1de293c5f76";
+    {
+      device = "/dev/disk/by-uuid/58f7f44e-40f4-416d-8f7d-f1de293c5f76";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/DD3A-0CFE";
+    {
+      device = "/dev/disk/by-uuid/DD3A-0CFE";
       fsType = "vfat";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/f429d0c9-58e5-4a49-bf35-bbed6eae98e4";
+    {
+      device = "/dev/disk/by-uuid/f429d0c9-58e5-4a49-bf35-bbed6eae98e4";
       fsType = "ext4";
     };
 
@@ -44,6 +65,7 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+# TODO handle the bluetooth
   hardware.bluetooth.enable = true;
 
   services.blueman.enable = true;

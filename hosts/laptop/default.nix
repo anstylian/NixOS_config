@@ -1,75 +1,56 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is av ilable in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{ pkgs, inputs, ... }: {
+  imports = [
+    inputs.nixos-hardware.nixosModules.dell-precision-3541
+    ./hardware-configuration.nix
 
-{ config, lib, pkgs, user, inputs, ... }:
+    ../common/global
+    ../common/users/angelos
 
-{
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/display-manager
-      ../../modules/desktop-environment
-      ../../modules/window_manager/sway
-      ../../modules/programs/swaylock
-      # ../../modules/web-site
-    ];
+    ../common/optional/wireless.nix
+    ../common/optional/greetd.nix
+    ../common/optional/pipewire.nix
+  ];
 
-  boot = {
-    loader = {
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
-      # grub = {
-      #   enable = true;
-      #   device = "nodev";
-      #   efiSupport = true;
-      #   useOSProber = true;
-      #   configurationLimit = 20;
-      # };
-      systemd-boot = {
-        # Use the systemd-boot EFI boot loader.
-        enable = true;
-        configurationLimit = 20;
-        consoleMode = "max";
-        editor = false;
-      };
-      timeout = 5;
-    };
-    kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = [ "ntfs" ];
+  networking = {
+    hostName = "nixos-laptop";
   };
 
-  programs.dconf.enable = true;
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
-  '';
+  powerManagement.powertop.enable = true;
+  programs = {
+    light.enable = true;
+    adb.enable = true;
+    dconf.enable = true;
+    kdeconnect.enable = true;
+  };
 
-  services.blueman.enable = true;
+  # Lid settings
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchExternalPower = "lock";
+  };
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-
-  #  services.xserver.xkbOptions = {
-  #    "eurosign:e";
-  #    "caps:escape" # map caps to escape.
-  #  };
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-  #  services.xserver.layout = "us,gr";
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+  };
+  # hardware = {
+  #   /*
+  #     nvidia = {
+  #     prime = {
+  #       offload.enable = true;
+  #       nvidiaBusId = "PCI:1:0:0";
+  #       intelBusId = "PCI:0:2:0";
+  #     };
+  #     };
+  #   */
+  #   opengl = {
+  #     enable = true;
+  #     driSupport = true;
+  #     driSupport32Bit = true;
+  #   };
+  # };
+  
+  # TODO adapte this one
   services.xserver = {
     enable = true;
     # Configure keymap in X11
@@ -86,10 +67,7 @@
     # synaptics = {
     #   enable = true;
     # };
-    displayManager = {
-      sddm = {
-        enable = true;
-      };
-    };
   };
+
+  system.stateVersion = "22.05";
 }
