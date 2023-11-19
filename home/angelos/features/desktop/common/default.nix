@@ -11,7 +11,9 @@
   ];
 
   home.packages = with pkgs; [ 
-    feh           # Simple image viewer
-    pavucontrol   # Volume control
+    feh             # Simple image viewer
+    pavucontrol     # Volume control
+    obsidian        # Time managment
+    signal-desktop  # Messaging app
   ];
 }

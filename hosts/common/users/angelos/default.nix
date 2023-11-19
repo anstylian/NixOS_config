@@ -1,7 +1,11 @@
-{ pkgs, config, lib, outputs, ... }:
+{ inputs, pkgs, config, lib, outputs, ... }:
 let ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+  ];
+
   users.mutableUsers = false;
   users.users.angelos = {
     isNormalUser = true;
@@ -30,10 +34,41 @@ in
     packages = [ pkgs.home-manager ];
   };
 
-  sops.secrets.angelos-password = {
-    sopsFile = ../../secrets.yaml;
-    neededForUsers = true;
+  users.users.root.password = "1234";
+
+  # sops.secrets.angelos-password = {
+  #   sopsFile = ../../secrets.yaml;
+  #   neededForUsers = true;
+  # };
+
+  sops.defaultSopsFile = ../../secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+  sops.age.keyFile = "/home/angelos/.config/sops/age/keys.txt";
+  sops.secrets."myservice/my_subdir/my_secret" = { };
+
+  systemd.services."sometestservice" = {
+    script = ''
+        echo "
+        Hey bro! I'm a service, and imma send this secure password:
+        $(cat ${config.sops.secrets."myservice/my_subdir/my_secret".path})
+        located in:
+        ${config.sops.secrets."myservice/my_subdir/my_secret".path}
+        to database and hack the mainframe
+        " > /var/lib/sometestservice/testfile
+    '';
+    serviceConfig = {
+      User = "sometestservice";
+      WorkingDirectory = "/var/lib/sometestservice";
+    };
   };
+
+  users.users.sometestservice = {
+    home = "/var/lib/sometestservice";
+    createHome = true;
+    isSystemUser = true;
+    group = "sometestservice";
+  };
+  users.groups.sometestservice = { };
 
   home-manager.users.angelos = import ../../../../home/angelos/laptop.nix;
 

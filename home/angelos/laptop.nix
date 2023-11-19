@@ -9,6 +9,7 @@ in
     ./global
     ./features/desktop/wireless
     ./features/desktop/sway
+    ./features/pass
     # ./features/desktop/waybar
     # ./features/pass TODO
   ];

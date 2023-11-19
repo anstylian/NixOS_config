@@ -9,6 +9,8 @@
     ../common/optional/wireless.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
+
+    inputs.sops-nix.nixosModules.sops
   ];
 
   networking = {

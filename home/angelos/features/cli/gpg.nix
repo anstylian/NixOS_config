@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, ... }:
 let
   pinentry =
     {
@@ -12,7 +12,7 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    sshKeys = [ "149F16412997785363112F3DBD713BC91D51B831" ];
+    # sshKeys = [ "THE PUBLIC KEY HERE" ];
     pinentryFlavor = pinentry.name;
     enableExtraSocket = true;
   };
@@ -36,10 +36,10 @@ in
         settings = {
           trust-model = "tofu+pgp";
         };
-        # publicKeys = [{
-        #   source = ../../pgp.asc;
-        #   trust = 5;
-        # }];
+        publicKeys = [{
+          source = ../../pgp.asc;
+          trust = 5;
+        }];
       };
     };
 

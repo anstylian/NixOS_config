@@ -1,15 +1,16 @@
-{ inputs, lib, config, ... }:
-let
-  isEd25519 = k: k.type == "ed25519";
-  getKeyPath = k: k.path;
-  keys = builtins.filter isEd25519 config.services.openssh.hostKeys;
-in
+{ inputs, config, ... }:
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
 
   sops = {
-    age.sshKeyPaths = map getKeyPath keys;
+    defaultSopsFile = ../secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/angelos/.config/sops/age/keys.txt";
+    secrets.example-key = { };
+    secrets."myservice/my_subdir/my_secret" = {
+      owner = "sometestservice";
+    };
   };
 }

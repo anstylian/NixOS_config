@@ -5,11 +5,11 @@
     ./direnv.nix
     ./github-cli.nix
     ./git.nix
-    ./gpg.nix
+    # ./gpg.nix
     # ./nix-index.nix
     ./pfetch.nix
     # ./shellcolor.nix
-    # ./ssh.nix
+    ./ssh.nix
     ./starship.nix
     ./neovim
   ];
@@ -21,12 +21,6 @@
     bc                # Calculator
     bottom            # System viewer
     ncdu              # TUI disk usage
-    eza               # Better ls
-    ripgrep           # Better grep
-    fd                # Better find
-    httpie            # Better curl
-    diffsitter        # Better diff
-    bat               # Better top
     jq                # JSON pretty printer and manipulator
     btop              # Resource Manager
     nitch             # Minimal fetch
@@ -38,6 +32,16 @@
     lm_sensors        # Computer temperature sensors
     ntfs3g            # mount ntfs filesystem
 
+    eza               # Better ls
+    ripgrep           # Better grep
+    fd                # Better find
+    httpie            # Better curl
+    diffsitter        # Better diff
+    bat               # Better top
+    tre-command       # Better tree
+    dutree            # Better du
+    tldr              # Better man
+
     nil               # Nix LSP
     nixfmt            # Nix formatter
 
@@ -45,7 +49,5 @@
 
     vim
     neovim
-    # inputs.nvim-config.packages.${pkgs.system}.nvim
-    # inputs.nvim-config.packages.${pkgs.system}.nvim-open
   ];
 }
