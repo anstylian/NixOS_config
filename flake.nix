@@ -35,14 +35,14 @@
         flake = false;
       };
 
-      petclinic = {
-        # url = "path:/home/angelos/Documents/git/douglas-adams-quotes";
-        url = "path:/home/angelos/Documents/git/petclinic";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+      # petclinic = {
+      #   # url = "path:/home/angelos/Documents/git/douglas-adams-quotes";
+      #   url = "path:/home/angelos/Documents/git/petclinic";
+      #   inputs.nixpkgs.follows = "nixpkgs";
+      # };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, astro-nvim, petclinic, ... }: # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, astro-nvim, ... }: # Function that tells my flake which to use and what do what to do with the dependencies.
     let # Variables that can be used in the config files.
       user = "angelos";
       location = "$HOME/.setup";
@@ -54,7 +54,7 @@
         import ./hosts {
           # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user location nixos-hardware astro-nvim petclinic; # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager user location nixos-hardware astro-nvim; # Also inherit home-manager so it does not need to be defined here.
         }
       );
     };

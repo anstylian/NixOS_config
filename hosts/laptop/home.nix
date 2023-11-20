@@ -56,9 +56,14 @@
 
   programs = {
     alacritty.settings.font.size = 11;
+    gpg.enable = true;
   };
 
   services = {
+    gpg-agent = {
+      enable = true;
+      pinentryFlavor = "tty";
+    };
     # Applets
     blueman-applet.enable = true; # Bluetooth
     network-manager-applet.enable = true; # Network

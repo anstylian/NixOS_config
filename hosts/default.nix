@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, user, location, nixos-hardware, astro-nvim, petclinic, ... }:
+{ lib, inputs, nixpkgs, home-manager, user, location, nixos-hardware, astro-nvim, ... }:
 
 let
   system = "x86_64-linux"; # System architecture
@@ -35,12 +35,12 @@ in
       };
     };
     modules = [
-      petclinic.nixosModules.default
-      ({ pkgs, ... }: {
-        services.petclinic = {
-          enable = true;
-        };
-      })
+      # petclinic.nixosModules.default
+      # ({ pkgs, ... }: {
+      #   services.petclinic = {
+      #     enable = true;
+      #   };
+      # })
 
       ./configuration.nix
       ./laptop

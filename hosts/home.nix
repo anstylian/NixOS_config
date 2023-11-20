@@ -141,6 +141,9 @@
       #obs-studio       # Recording/Live Streaming
 
       ntfs3g            # mount ntfs filesystem
+
+      age
+      sops
     ];
     file.".config/wallpaper.jpg".source = ../modules/themes/digital-digital-art-artwork-illustration-minimalism-hd-wallpaper-d6caac3492787d76e8e36b4298facda4.jpg;
     file.".config/lockscreen.jpg".source = ../modules/themes/vector-forest-sunset-forest-sunset-forest-wallpaper-b3abc35d0d699b056fa6b247589b18a8.jpg;
