@@ -10,31 +10,32 @@ import nvr
 
 
 def find_project_root(initial_path: Path) -> Path:
-    path = initial_path
-    while path.parent == path:
-        print(path)
-        project_files = [
-            ".git",
-            "_darcs",
-            ".hg",
-            ".bzr",
-            ".svn",
-            "Makefile",
-            "package.json",
-            "setup.py",
-            "setup.cfg",
-            "pyproject.toml",
-        ]
-        for project_file in project_files:
+    project_files = [
+        ".git",
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "Makefile",
+        "package.json",
+        "setup.py",
+        "setup.cfg",
+        "pyproject.toml",
+        "flake.nix",
+        "Cargo.toml",
+    ]
+    for project_file in project_files:
+        path = initial_path
+        while path.parent != path:
             if (path / project_file).exists():
                 return path
-        path = path.parent
+            path = path.parent
     return initial_path
 
 
 def main() -> None:
-    line = 0
-    project_root = os.getcwd()
+    line = "0"
+    project_root = Path(os.getcwd())
     if len(sys.argv) >= 2:
         path = Path(sys.argv[1])
         args = path.name.split(":")
@@ -63,11 +64,23 @@ def main() -> None:
     os.environ["TTY"] = str(os.ttyname(sys.stdout.fileno()))
     os.environ["NVIM_LISTEN_ADDRESS"] = str(sock)
 
+    vim_commands = ""
+    if project_root.exists():
+        if project_root.is_dir():
+            vim_commands = f"lcd {project_root}"
+    else:
+        try:
+            project_root.mkdir(parents=True, exist_ok=True)
+            vim_commands += f"lcd {project_root}"
+        except OSError:
+            pass
+    vim_commands += " | RaiseTmuxPane"
+
     args = [
         "nvr",
-        "+{}".format(line),
+        f"+{line}",
         "-cc",
-        f"lcd {project_root} | RaiseTmuxPane",
+        vim_commands,
         "--remote-silent",
         "-s",
     ] + sys.argv[1:]

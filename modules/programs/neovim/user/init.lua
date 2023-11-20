@@ -4,9 +4,23 @@ vim.api.nvim_create_user_command("RaiseTmuxPane", function()
   local out = vim.fn.system "tmux list-panes -a -F '#I #{pane_tty}'"
   local tty = vim.env.TTY
   if tty == nil then return end
-  local _, _, window_id = string.find(out, "(%d+) " .. tty)
+  local _, _, window_id = string.find(out, "(%d+) " .. tty .. "$")
   if window_id == nil then return end
   vim.fn.system("tmux select-window -t '" .. window_id .. "'")
+end, {})
+
+vim.api.nvim_create_user_command("Nurl", function()
+  local url = vim.fn.input("Enter a URL: ")
+  local rev = vim.fn.input("Enter the revision (e.g., v0.2.0 or empty string): ")
+
+  local cmd = string.format('nurl %s %s 2>/dev/null', url, rev)
+
+  local output = vim.fn.systemlist(cmd)
+  if vim.v.shell_error == 0 and #output > 0 then
+    vim.api.nvim_put(output, "l", true, true)
+  else
+    print("Error executing command or command returned empty result.")
+  end
 end, {})
 
 return {
@@ -28,7 +42,7 @@ return {
     },
   },
   -- Set colorscheme to use
-  colorscheme = "gruvbox",
+  colorscheme = "monokai-pro",
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = true,
@@ -86,6 +100,8 @@ return {
   -- Configure require("lazy").setup() options
   lazy = {
     defaults = { lazy = true },
+    -- Disable change detection because it caused nvim to constantly need 3-5% CPU, which is bad for battery life
+    change_detection = { enabled = false, },
     performance = {
       rtp = {
         -- customize default disabled vim plugins

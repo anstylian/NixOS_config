@@ -1,10 +1,9 @@
-{ config
-, pkgs
+{ inputs
 , lib
-, inputs
+, pkgs
+, stdenv
 , ...
-}:
-let
+}: let 
   langs = [
     # "agda"
     "bash"
@@ -53,8 +52,7 @@ let
       install -D -m755 ${./nvim-open.py} $out/bin/nvim-open
     '';
   };
-in
-{
+in {
   home.packages = with pkgs; [
     neovim
     nvim-open
@@ -66,7 +64,6 @@ in
     sumneko-lua-language-server
 
     # based on ./suggested-pkgs.json
-    delve
     gopls
     golangci-lint
     nodePackages.bash-language-server
@@ -75,11 +72,6 @@ in
     rust-analyzer
     yaml-language-server
     nil
-    gomodifytags
-    gofumpt
-    iferr
-    impl
-    gotools
     shellcheck
     shfmt
     isort
@@ -90,9 +82,27 @@ in
     clang-tools
     nodePackages.prettier
     stylua
-    # does not build yet on aarch64
-  ] ++ lib.optional (pkgs.stdenv.hostPlatform.system == "x86_64-linux") pkgs.deno; # lsp
-  xdg.dataHome = "${config.home.homeDirectory}/.data";
+    # based on https://github.com/ray-x/go.nvim#go-binaries-install-and-update
+    go
+    gofumpt
+    gomodifytags
+    gotools
+    delve
+    golines
+    gomodifytags
+    gotests
+    iferr
+    impl
+    reftools
+    ginkgo
+    richgo
+    govulncheck
+
+    deno
+  ];
+
+  xdg.dataHome = "/home/angelos/.data";
+  # xdg.dataHome = "${config.home.homeDirectory}/.data";
   xdg.dataFile."nvim/lazy/telescope-fzf-native.nvim/build/libfzf.so".source = "${pkgs.vimPlugins.telescope-fzf-native-nvim}/build/libfzf.so";
   xdg.configFile."nvim".source = pkgs.runCommand "nvim" { } ''
     mkdir -p $out/parser
