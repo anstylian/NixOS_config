@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ inputs, ... }: {
   imports = [
     inputs.nixos-hardware.nixosModules.dell-precision-3541
     ./hardware-configuration.nix
@@ -9,13 +9,7 @@
     ../common/optional/wireless.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
-
-    inputs.sops-nix.nixosModules.sops
   ];
-
-  networking = {
-    hostName = "nixos-laptop";
-  };
 
   powerManagement.powertop.enable = true;
   programs = {
@@ -51,7 +45,7 @@
   #     driSupport32Bit = true;
   #   };
   # };
-  
+
   # TODO adapte this one
   services.xserver = {
     enable = true;

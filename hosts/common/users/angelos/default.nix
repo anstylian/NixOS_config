@@ -2,9 +2,9 @@
 let ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
+  networking = {
+    hostName = "nixos-laptop";
+  };
 
   users.mutableUsers = false;
   users.users.angelos = {
@@ -29,46 +29,8 @@ in
     # openssh.authorizedKeys.keys = [ TODO
     #   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDci4wJghnRRSqQuX1z2xeaUR+p/muKzac0jw0mgpXE2T/3iVlMJJ3UXJ+tIbySP6ezt0GVmzejNOvUarPAm0tOcW6W0Ejys2Tj+HBRU19rcnUtf4vsKk8r5PW5MnwS8DqZonP5eEbhW2OrX5ZsVyDT+Bqrf39p3kOyWYLXT2wA7y928g8FcXOZjwjTaWGWtA+BxAvbJgXhU9cl/y45kF69rfmc3uOQmeXpKNyOlTk6ipSrOfJkcHgNFFeLnxhJ7rYxpoXnxbObGhaNqn7gc5mt+ek+fwFzZ8j6QSKFsPr0NzwTFG80IbyiyrnC/MeRNh7SQFPAESIEP8LK3PoNx2l1M+MjCQXsb4oIG2oYYMRa2yx8qZ3npUOzMYOkJFY1uI/UEE/j/PlQSzMHfpmWus4o2sijfr8OmVPGeoU/UnVPyINqHhyAd1d3Iji3y3LMVemHtp5wVcuswABC7IRVVKZYrMCXMiycY5n00ch6XTaXBwCY00y8B3Mzkd7Ofq98YHc= (none)"
     # ];
-    # hashedPasswordFile = config.sops.secrets.angelos-password.path;
-    password = "1234";
     packages = [ pkgs.home-manager ];
   };
-
-  users.users.root.password = "1234";
-
-  # sops.secrets.angelos-password = {
-  #   sopsFile = ../../secrets.yaml;
-  #   neededForUsers = true;
-  # };
-
-  sops.defaultSopsFile = ../../secrets.yaml;
-  sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/angelos/.config/sops/age/keys.txt";
-  sops.secrets."myservice/my_subdir/my_secret" = { };
-
-  systemd.services."sometestservice" = {
-    script = ''
-        echo "
-        Hey bro! I'm a service, and imma send this secure password:
-        $(cat ${config.sops.secrets."myservice/my_subdir/my_secret".path})
-        located in:
-        ${config.sops.secrets."myservice/my_subdir/my_secret".path}
-        to database and hack the mainframe
-        " > /var/lib/sometestservice/testfile
-    '';
-    serviceConfig = {
-      User = "sometestservice";
-      WorkingDirectory = "/var/lib/sometestservice";
-    };
-  };
-
-  users.users.sometestservice = {
-    home = "/var/lib/sometestservice";
-    createHome = true;
-    isSystemUser = true;
-    group = "sometestservice";
-  };
-  users.groups.sometestservice = { };
 
   home-manager.users.angelos = import ../../../../home/angelos/laptop.nix;
 

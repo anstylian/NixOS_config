@@ -51,7 +51,7 @@ in
         mode = "dock";
         layer = "top";
         height = 40;
-        margin = "6";
+        # margin = "6";
         position = "top";
         modules-left = [
           "custom/menu"
@@ -69,16 +69,17 @@ in
         modules-center = [
           "pulseaudio"
           "battery"
+          "idle_inhibitor"
           "clock"
-          "custom/unread-mail"
+          # "custom/unread-mail"
           "custom/gpg-agent"
         ];
 
         modules-right = [
           "network"
-          "custom/tailscale-ping"
+          # "custom/tailscale-ping"
           # TODO: currently broken for some reason
-          # "custom/gammastep"
+          "custom/gammastep"
           "tray"
           "custom/hostname"
         ];
@@ -106,8 +107,8 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "󰒳";
-            deactivated = "󰒲";
+            "activated" = "";
+            "deactivated" = "";
           };
         };
         battery = {
@@ -133,32 +134,32 @@ in
             Down: {bandwidthDownBits}'';
           on-click = "";
         };
-        "custom/tailscale-ping" = {
-          interval = 10;
-          return-type = "json";
-          exec =
-            let
-              inherit (builtins) concatStringsSep attrNames;
-              hosts = attrNames outputs.nixosConfigurations;
-              homeMachine = "merope";
-              remoteMachine = "alcyone";
-            in
-            jsonOutput "tailscale-ping" {
-              # Build variables for each host
-              pre = ''
-                set -o pipefail
-                ${concatStringsSep "\n" (map (host: ''
-                  ping_${host}="$(${timeout} 2 ${ping} -c 1 -q ${host} 2>/dev/null | ${tail} -1 | ${cut} -d '/' -f5 | ${cut} -d '.' -f1)ms" || ping_${host}="Disconnected"
-                '') hosts)}
-              '';
-              # Access a remote machine's and a home machine's ping
-              text = "  $ping_${remoteMachine} /  $ping_${homeMachine}";
-              # Show pings from all machines
-              tooltip = concatStringsSep "\n" (map (host: "${host}: $ping_${host}") hosts);
-            };
-          format = "{}";
-          on-click = "";
-        };
+        # "custom/tailscale-ping" = {
+        #   interval = 10;
+        #   return-type = "json";
+        #   exec =
+        #     let
+        #       inherit (builtins) concatStringsSep attrNames;
+        #       hosts = attrNames outputs.nixosConfigurations;
+        #       homeMachine = "merope";
+        #       remoteMachine = "alcyone";
+        #     in
+        #     jsonOutput "tailscale-ping" {
+        #       # Build variables for each host
+        #       pre = ''
+        #         set -o pipefail
+        #         ${concatStringsSep "\n" (map (host: ''
+        #           ping_${host}="$(${timeout} 2 ${ping} -c 1 -q ${host} 2>/dev/null | ${tail} -1 | ${cut} -d '/' -f5 | ${cut} -d '.' -f1)ms" || ping_${host}="Disconnected"
+        #         '') hosts)}
+        #       '';
+        #       # Access a remote machine's and a home machine's ping
+        #       text = "  $ping_${remoteMachine} /  $ping_${homeMachine}";
+        #       # Show pings from all machines
+        #       tooltip = concatStringsSep "\n" (map (host: "${host}: $ping_${host}") hosts);
+        #     };
+        #   format = "{}";
+        #   on-click = "";
+        # };
         "custom/menu" = {
           return-type = "json";
           exec = jsonOutput "menu" {
@@ -167,7 +168,7 @@ in
           };
           on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
           on-click-right = lib.concatStringsSep ";" (
-            (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace") ++
+            # (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace") ++
             (lib.optional hasSway "${sway}/bin/swaymsg scratchpad show")
           );
 
@@ -176,31 +177,31 @@ in
           exec = "echo $USER@$HOSTNAME";
           on-click = "${systemctl} --user restart waybar";
         };
-        "custom/unread-mail" = {
-          interval = 5;
-          return-type = "json";
-          exec = jsonOutput "unread-mail" {
-            pre = ''
-              count=$(${find} ~/Mail/*/Inbox/new -type f | ${wc} -l)
-              if ${pgrep} mbsync &>/dev/null; then
-                status="syncing"
-              else if [ "$count" == "0" ]; then
-                status="read"
-              else
-                status="unread"
-              fi
-              fi
-            '';
-            text = "$count";
-            alt = "$status";
-          };
-          format = "{icon}  ({})";
-          format-icons = {
-            "read" = "󰇯";
-            "unread" = "󰇮";
-            "syncing" = "󰁪";
-          };
-        };
+        # "custom/unread-mail" = {
+        #   interval = 5;
+        #   return-type = "json";
+        #   exec = jsonOutput "unread-mail" {
+        #     pre = ''
+        #       count=$(${find} ~/Mail/*/Inbox/new -type f | ${wc} -l)
+        #       if ${pgrep} mbsync &>/dev/null; then
+        #         status="syncing"
+        #       else if [ "$count" == "0" ]; then
+        #         status="read"
+        #       else
+        #         status="unread"
+        #       fi
+        #       fi
+        #     '';
+        #     text = "$count";
+        #     alt = "$status";
+        #   };
+        #   format = "{icon}  ({})";
+        #   format-icons = {
+        #     "read" = "󰇯";
+        #     "unread" = "󰇮";
+        #     "syncing" = "󰁪";
+        #   };
+        # };
         "custom/gpg-agent" = {
           interval = 2;
           return-type = "json";
@@ -249,53 +250,6 @@ in
           };
           on-click = "${systemctl} --user is-active gammastep && ${systemctl} --user stop gammastep || ${systemctl} --user start gammastep";
         };
-        "custom/currentplayer" = {
-          interval = 2;
-          return-type = "json";
-          exec = jsonOutput "currentplayer" {
-            pre = ''
-              player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No player active" | ${cut} -d '.' -f1)"
-              count="$(${playerctl} -l 2>/dev/null | ${wc} -l)"
-              if ((count > 1)); then
-                more=" +$((count - 1))"
-              else
-                more=""
-              fi
-            '';
-            alt = "$player";
-            tooltip = "$player ($count available)";
-            text = "$more";
-          };
-          format = "{icon}{}";
-          format-icons = {
-            "No player active" = " ";
-            "Celluloid" = "󰎁 ";
-            "spotify" = "󰓇 ";
-            "ncspot" = "󰓇 ";
-            "qutebrowser" = "󰖟 ";
-            "firefox" = " ";
-            "discord" = " 󰙯 ";
-            "sublimemusic" = " ";
-            "kdeconnect" = "󰄡 ";
-            "chromium" = " ";
-          };
-          on-click = "${playerctld} shift";
-          on-click-right = "${playerctld} unshift";
-        };
-        "custom/player" = {
-          exec-if = "${playerctl} status 2>/dev/null";
-          exec = ''${playerctl} metadata --format '{"text": "{{title}} - {{artist}}", "alt": "{{status}}", "tooltip": "{{title}} - {{artist}} ({{album}})"}' 2>/dev/null '';
-          return-type = "json";
-          interval = 2;
-          max-length = 30;
-          format = "{icon} {}";
-          format-icons = {
-            "Playing" = "󰐊";
-            "Paused" = "󰏤 ";
-            "Stopped" = "󰓛";
-          };
-          on-click = "${playerctl} play-pause";
-        };
       };
 
     };
@@ -311,26 +265,11 @@ in
         padding: 0 8px;
       }
 
-      .modules-right {
-        margin-right: -15px;
-      }
-
-      .modules-left {
-        margin-left: -15px;
-      }
-
       window#waybar.top {
         opacity: 0.95;
         padding: 0;
         background-color: #${colors.base00};
         border: 2px solid #${colors.base0C};
-        border-radius: 10px;
-      }
-      window#waybar.bottom {
-        opacity: 0.90;
-        background-color: #${colors.base00};
-        border: 2px solid #${colors.base0C};
-        border-radius: 10px;
       }
 
       window#waybar {
@@ -349,12 +288,13 @@ in
       }
       #workspaces button.focused,
       #workspaces button.active {
-        background-color: #${colors.base0A};
-        color: #${colors.base00};
+        background-color: #285577;
+        color: #${colors.base07};
       }
 
+
       #clock {
-        background-color: #${colors.base0C};
+        background-color: #${colors.base04};
         color: #${colors.base00};
         padding-left: 15px;
         padding-right: 15px;
@@ -364,7 +304,7 @@ in
       }
 
       #custom-menu {
-        background-color: #${colors.base0C};
+        background-color: #${colors.base04};
         color: #${colors.base00};
         padding-left: 15px;
         padding-right: 22px;
@@ -372,7 +312,7 @@ in
         border-radius: 10px;
       }
       #custom-hostname {
-        background-color: #${colors.base0C};
+        background-color: #${colors.base04};
         color: #${colors.base00};
         padding-left: 15px;
         padding-right: 18px;
@@ -390,3 +330,21 @@ in
     '';
   };
 }
+
+# colors:
+# base00: "#272822"
+# base01: "#383830"
+# base02: "#49483e"
+# base03: "#75715e"
+# base04: "#a59f85"
+# base05: "#f8f8f2"
+# base06: "#f5f4f1"
+# base07: "#f9f8f5"
+# base08: "#f92672"
+# base09: "#fd971f"
+# base0a: "#f4bf75"
+# base0b: "#a6e22e"
+# base0c: "#a1efe4"
+# base0d: "#66d9ef"
+# base0e: "#ae81ff"
+# base0f: "#cc6633"

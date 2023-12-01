@@ -4,11 +4,11 @@
 
 { pkgs, config, ... }:
 
-let 
-      workspace_terminal = "1:terminal";
-      workspace_www = "2:www";
-      workspace_reading = "3:reading";
-      workspace_coding = "4:coding";
+let
+  workspace_terminal = "1:terminal";
+  workspace_www = "2:www";
+  workspace_reading = "3:reading";
+  workspace_coding = "4:coding";
 in
 {
   imports = [

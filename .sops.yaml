@@ -1,9 +1,0 @@
-keys:
-  - &angelos_key age1yuskwcrmf46y6ycx7ftyaz5as74a9xdd2kxj8hex5w385ytz353s939xsa
-  - &laptop_key age1298mpt264m7ggzdhhfn3ydh837msfwt3q9wxql7s5l0ceh9uxp2qxvhweq
-creation_rules:
-  - path_regex: hosts/common/secrets.ya?ml$
-    key_groups:
-    - age:
-      - *angelos_key
-      - *laptop_key
