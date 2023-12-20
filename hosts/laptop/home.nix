@@ -51,6 +51,14 @@
 
       signal-desktop
 
+      gns3-gui
+      gns3-server
+      qemu
+      kvmtool
+      libvirt
+      inetutils
+
+      teamviewer
     ];
   };
 

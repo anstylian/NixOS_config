@@ -40,6 +40,7 @@
       # Apps
       appimage-run      # Runs AppImages on NixOS
       firefox           # Browser
+      chromium          # Browser
 #      google-chrome     # Browser
       remmina           # XRDP & VNC Client
       docker-compose

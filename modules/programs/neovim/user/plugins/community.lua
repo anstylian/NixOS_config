@@ -4,17 +4,17 @@ return {
  -- example of imporing a plugin, comment out to use it or add your own
  -- available plugins can be found at https://github.com/AstroNvim/astrocommunity
  { import = "astrocommunity.colorscheme.gruvbox-nvim" },
- { import = "astrocommunity.colorscheme.monokai-pro-nvim" }, 
- -- { import = "astrocommunity.completion.copilot-lua" },
- -- { import = "astrocommunity.completion.copilot-lua-cmp" },
- -- {
- --  "zbirenbaum/copilot.lua",
- --  opts = {
- --   filetypes = {
- --    gitcommit = true,
- --   },
- --  },
- -- },
+ { import = "astrocommunity.colorscheme.monokai-pro-nvim" },
+ { import = "astrocommunity.completion.copilot-lua" },
+ { import = "astrocommunity.completion.copilot-lua-cmp" },
+ {
+  "zbirenbaum/copilot.lua",
+  opts = {
+   filetypes = {
+    gitcommit = true,
+   },
+  },
+ },
  { import = "astrocommunity.project.project-nvim" },
  { import = "astrocommunity.pack.go" },
  {
@@ -33,5 +33,5 @@ return {
  { import = "astrocommunity.pack.nix" },
  { import = "astrocommunity.terminal-integration.vim-tpipeline" },
  { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
- { import = "astrocommunity.editing-support.auto-save-nvim" },
+ -- { import = "astrocommunity.editing-support.auto-save-nvim" },
 }

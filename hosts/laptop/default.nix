@@ -14,6 +14,7 @@
       ../../modules/window_manager/sway
       ../../modules/programs/swaylock
       # ../../modules/web-site
+      inputs.sops-nix.nixosModules.sops
     ];
 
   boot = {
@@ -42,6 +43,22 @@
     supportedFilesystems = [ "ntfs" ];
   };
 
+  # security.wrappers.ubridge = {
+  #   source = "/run/current-system/sw/bin/ubridge";
+  #   capabilities = "cap_net_admin,cap_net_raw=ep";
+  #   owner = "angelos";
+  #   group = "ubridge";
+  #   permissions = "u+rx,g+x";
+  # };
+  #
+  # security.wrappers.ubridge = {
+  #   source = "/run/current-system/sw/bin/ubridge";
+  #   capabilities = "cap_net_admin,cap_net_raw=ep";
+  #   owner = "root";
+  #   group = "ubridge";
+  #   permissions = "u + rx,g+x";
+  # };
+
   programs.dconf.enable = true;
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
@@ -58,7 +75,6 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-
   #  services.xserver.xkbOptions = {
   #    "eurosign:e";
   #    "caps:escape" # map caps to escape.
@@ -66,6 +82,23 @@
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
+
+  environment = {
+    systemPackages = with pkgs; [
+      # Default packages installed system-wide
+      ubridge
+      tigervnc
+    ];
+  };
+  security.wrappers.ubridge = {
+    owner = "root";
+    group = "root";
+    capabilities = "cap_net_admin,cap_net_raw=ep";
+    source = "${pkgs.ubridge}/bin/ubridge";
+  };
+  services.teamviewer.enable = true;
+
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -92,4 +125,39 @@
       };
     };
   };
+
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+
+  sops.age.keyFile = "/home/angelos/.config/sops/age/keys.txt";
+
+  sops.secrets."myservice/my_subdir/my_secret" = {
+    owner = "sometestservice";
+    mode = "0440";
+  };
+
+  systemd.services."sometestservice" = {
+    script = ''
+      echo "
+      Hey bro! I'm a service, and imma send this secure password:
+      $(cat ${config.sops.secrets."myservice/my_subdir/my_secret".path})
+      located in:
+      ${config.sops.secrets."myservice/my_subdir/my_secret".path}
+      to database and hack the mainframe
+      " > /var/lib/sometestservice/testfile
+    '';
+    serviceConfig = {
+      User = "sometestservice";
+      WorkingDirectory = "/var/lib/sometestservice";
+    };
+  };
+
+  users.users.sometestservice = {
+    home = "/var/lib/sometestservice";
+    createHome = true;
+    isSystemUser = true;
+    group = "sometestservice";
+  };
+  users.groups.sometestservice = { };
+
 }

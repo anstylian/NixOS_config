@@ -18,7 +18,7 @@
 
       # Latest stable branch of nixpkgs, used for version rollback
       # The current latest version is 23.05
-      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+      nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
 
       home-manager = {
         # User Package Management
@@ -33,6 +33,12 @@
       astro-nvim = {
         url = "github:AstroNvim/AstroNvim";
         flake = false;
+      };
+
+      sops-nix = {
+        url = "github:mic92/sops-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.nixpkgs-stable.follows = "nixpkgs";
       };
 
       # petclinic = {
