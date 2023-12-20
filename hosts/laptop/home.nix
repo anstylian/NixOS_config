@@ -47,7 +47,7 @@
       dutree
 
       zathura
-      obsidian
+      # obsidian
 
       signal-desktop
 
