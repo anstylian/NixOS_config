@@ -14,7 +14,6 @@
       ../../modules/window_manager/sway
       ../../modules/programs/swaylock
       # ../../modules/web-site
-      inputs.sops-nix.nixosModules.sops
     ];
 
   boot = {
@@ -88,6 +87,7 @@
       # Default packages installed system-wide
       ubridge
       tigervnc
+      telegraf
     ];
   };
   security.wrappers.ubridge = {
@@ -126,38 +126,74 @@
     };
   };
 
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
-  sops.defaultSopsFormat = "yaml";
-
-  sops.age.keyFile = "/home/angelos/.config/sops/age/keys.txt";
-
-  sops.secrets."myservice/my_subdir/my_secret" = {
-    owner = "sometestservice";
-    mode = "0440";
-  };
-
-  systemd.services."sometestservice" = {
-    script = ''
-      echo "
-      Hey bro! I'm a service, and imma send this secure password:
-      $(cat ${config.sops.secrets."myservice/my_subdir/my_secret".path})
-      located in:
-      ${config.sops.secrets."myservice/my_subdir/my_secret".path}
-      to database and hack the mainframe
-      " > /var/lib/sometestservice/testfile
-    '';
-    serviceConfig = {
-      User = "sometestservice";
-      WorkingDirectory = "/var/lib/sometestservice";
+  services = {
+    grafana = {
+      enable = true;
+      settings = {
+        server = {
+          # Listening Address
+          http_addr = "127.0.0.1";
+          # and Port
+          http_port = 3000;
+          # Grafana needs to know on which domain and URL it's running
+          # domain = "your.domain";
+          # root_url = "https://your.domain/grafana/"; # Not needed if it is `https://your.domain/`
+          serve_from_sub_path = true;
+        };
+      };
     };
+    influxdb2 = {
+      enable = true;
+      # api key: zZuMHEZn34CNtkeFzJ1ptMoDUFShuwzonS5Yb-ppc7g1FhRkspIxveBuJlB42zzrQfLKAIEy5IATHoXRCJ8Q5A==
+    };
+    prometheus = {
+      enable = true;
+      port = 9090;
+      exporters = {
+        node = {
+          enable = true;
+          enabledCollectors = [ "systemd" ];
+          port = 9000;
+        };
+      };
+      scrapeConfigs = [
+        {
+          job_name = "chrysalis";
+          static_configs = [{
+            targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
+          }];
+        }
+      ];
+    };
+    # telegraf = {
+    #   enable = true;
+    #   extraConfig = {
+    #     outputs.influxdb_v2 = {
+    #       urls = [ "http://127.0.0.1:8086" ];
+    #       token = "zZuMHEZn34CNtkeFzJ1ptMoDUFShuwzonS5Yb-ppc7g1FhRkspIxveBuJlB42zzrQfLKAIEy5IATHoXRCJ8Q5A==";
+    #       bucket = "telegraf";
+    #       organization = "0858801ad6ccbb13";
+    #       # database = "telegraf";
+    #     };
+    #     inputs.cpu = {
+    #       percpu = true;
+    #       totalcpu = true;
+    #       taginclude = [ "cpu" ];
+    #     };
+    #     # inputs.mqtt_consumer = {
+    #     #   servers = ["tcp://127.0.0.1:1883"];
+    #     #   topics = [
+    #     #     "telegraf/test/topic/qwe"
+    #     #     "telegraf/test/topic/asd"
+    #     #     "hello/world"
+    #     #     "hello/+/world"
+    #     #   ];
+    #     # };
+    #     # inputs.statsd = {
+    #     #   service_address = ":8125";
+    #     #   delete_timings = true;
+    #     # };
+    #   };
+    # };
   };
-
-  users.users.sometestservice = {
-    home = "/var/lib/sometestservice";
-    createHome = true;
-    isSystemUser = true;
-    group = "sometestservice";
-  };
-  users.groups.sometestservice = { };
-
 }

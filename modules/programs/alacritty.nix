@@ -4,7 +4,7 @@
 # Hardcoded as terminal for rofi and doom emacs
 #
 
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs = {
@@ -15,10 +15,6 @@
           normal.family = "FiraCode Nerd Font";
           bold = { style = "Bold"; };
           #size = 8;
-        };
-        offset = {                            # Positioning
-          x = -1;
-          y = 0;
         };
       };
     };
